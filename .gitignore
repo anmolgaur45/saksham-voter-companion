@@ -1,0 +1,71 @@
+# AI tooling, planning & working notes — never commit
+tasks/
+.claude/
+.cursor/
+.continue/
+.aider*
+CLAUDE.md
+claude.md
+AGENTS.md
+agents.md
+plan.md
+PLAN.md
+.prompts/
+prompts/
+scratch/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+.pnpm-store/
+
+# Env files — never commit secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE (but not .vscode/extensions.json etc — narrow as needed)
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# GCP / deployment scratch
+*.json.key
+service-account-*.json
+
+# ECI source PDFs (large; document sources in data/eci-docs/SOURCES.md)
+data/eci-docs/*.pdf
+data/eci-docs/*.PDF
+
+# Eval reports (generated)
+eval/reports/
+
+# Backend virtualenv
+apps/backend/.venv/
