@@ -1,12 +1,11 @@
 # ECI Document Sources
 
-Documents downloaded and ingested in Phase 2. Each entry records the source URL and download date.
-
-| Document | Source URL | Downloaded |
-|---|---|---|
-| ECI Voter's Handbook | https://eci.gov.in | — |
-| Form 6 (inclusion application) | https://eci.gov.in | — |
-| Form 7 (objection to inclusion) | https://eci.gov.in | — |
-| Form 8 (correction of particulars) | https://eci.gov.in | — |
-| Model Code of Conduct | https://eci.gov.in | — |
-| ECI FAQ for voters | https://eci.gov.in/voter-helpline | — |
+| Document | Filename | Source | Downloaded |
+|---|---|---|---|
+| Form 6 — Application for inclusion of name in electoral roll | Form_6_English.pdf | eci.gov.in | 2026-04-21 |
+| Form 7 — Application for objection to inclusion of name | Form_7_English.pdf | eci.gov.in | 2026-04-21 |
+| Form 8 — Application for correction / transposition of entry | Form_8_English.pdf | eci.gov.in | 2026-04-21 |
+| EVM Manual | EVM Manual.pdf | eci.gov.in | 2026-04-21 |
+| EVM User Manual | EVM User Manual.pdf | eci.gov.in | 2026-04-21 |
+| Manual on Model Code of Conduct | Manual on Model Code of Conduct.pdf | eci.gov.in | 2026-04-21 |
+| Compendium of Instructions on Model Code of Conduct | Compendium of Instructions on Model Code of Conduct ECI.pdf | eci.gov.in | 2026-04-21 |

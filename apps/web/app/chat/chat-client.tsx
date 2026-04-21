@@ -4,11 +4,14 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CitationCard } from "@/components/CitationCard";
+import type { Citation } from "@/lib/api";
 import { sendMessage } from "./actions";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+  citations?: Citation[];
 }
 
 export default function ChatClient() {
@@ -30,15 +33,12 @@ export default function ChatClient() {
       const res = await sendMessage(text, sessionId.current);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: res.response },
+        { role: "assistant", content: res.response, citations: res.citations },
       ]);
     } catch {
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: "Something went wrong. Please try again.",
-        },
+        { role: "assistant", content: "Something went wrong. Please try again." },
       ]);
     } finally {
       setLoading(false);
@@ -58,7 +58,7 @@ export default function ChatClient() {
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            className={`mb-3 flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
           >
             <span
               className={`inline-block px-3 py-2 rounded-lg max-w-[80%] text-sm ${
@@ -69,6 +69,15 @@ export default function ChatClient() {
             >
               {msg.content}
             </span>
+            {msg.role === "assistant" &&
+              msg.citations &&
+              msg.citations.length > 0 && (
+                <div className="flex flex-wrap gap-1 mt-1 max-w-[80%]">
+                  {msg.citations.map((c, j) => (
+                    <CitationCard key={j} citation={c} />
+                  ))}
+                </div>
+              )}
           </div>
         ))}
         {loading && (

@@ -5,15 +5,15 @@ export interface ChatRequest {
   session_id: string;
 }
 
+export interface Citation {
+  title: string | null;
+  url: string | null;
+}
+
 export interface ChatResponse {
   response: string;
   agent: string;
-}
-
-export interface Citation {
-  title: string;
-  page: number | null;
-  url: string | null;
+  citations: Citation[];
 }
 
 export async function chat(
