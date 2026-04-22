@@ -9,6 +9,9 @@ dependencies = [
     "pydantic-settings>=2.7.0",
     "structlog>=24.4.0",
     "google-cloud-aiplatform>=1.87.0",
+    "google-cloud-firestore>=2.27.0",
+    "google-cloud-translate>=3.26.0",
+    "google-cloud-texttospeech>=2.36.0",
 ]
 
 [tool.uv]

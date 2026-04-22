@@ -1,10 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CitationCard } from "@/components/CitationCard";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { VoicePlayButton } from "@/components/VoicePlayButton";
 import type { Citation } from "@/lib/api";
 import { sendMessage } from "./actions";
 
@@ -12,12 +15,14 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   citations?: Citation[];
+  booth_query?: string;
 }
 
 export default function ChatClient() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [language, setLanguage] = useState("en");
   const sessionId = useRef(crypto.randomUUID());
 
   async function handleSubmit(e: React.FormEvent) {
@@ -30,10 +35,15 @@ export default function ChatClient() {
     setLoading(true);
 
     try {
-      const res = await sendMessage(text, sessionId.current);
+      const res = await sendMessage(text, sessionId.current, language);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: res.response, citations: res.citations },
+        {
+          role: "assistant",
+          content: res.response,
+          citations: res.citations,
+          booth_query: res.booth_query,
+        },
       ]);
     } catch {
       setMessages((prev) => [
@@ -46,8 +56,11 @@ export default function ChatClient() {
   }
 
   return (
-    <div className="flex flex-col h-screen max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Saksham</h1>
+    <div className="flex flex-col h-screen w-full max-w-3xl mx-auto p-4">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Saksham</h1>
+        <LanguageToggle onChange={setLanguage} />
+      </div>
 
       <ScrollArea className="flex-1 border rounded-lg p-4 mb-4">
         {messages.length === 0 && (
@@ -69,15 +82,26 @@ export default function ChatClient() {
             >
               {msg.content}
             </span>
-            {msg.role === "assistant" &&
-              msg.citations &&
-              msg.citations.length > 0 && (
-                <div className="flex flex-wrap gap-1 mt-1 max-w-[80%]">
-                  {msg.citations.map((c, j) => (
-                    <CitationCard key={j} citation={c} />
-                  ))}
-                </div>
-              )}
+            {msg.role === "assistant" && (
+              <div className="flex flex-col gap-1 max-w-[80%]">
+                {msg.citations && msg.citations.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {msg.citations.map((c, j) => (
+                      <CitationCard key={j} citation={c} />
+                    ))}
+                  </div>
+                )}
+                {msg.booth_query && (
+                  <Link
+                    href={`/booth?q=${msg.booth_query}`}
+                    className="mt-1 inline-flex items-center gap-1 text-xs text-primary underline underline-offset-2"
+                  >
+                    View on map →
+                  </Link>
+                )}
+                <VoicePlayButton text={msg.content} language={language} />
+              </div>
+            )}
           </div>
         ))}
         {loading && (

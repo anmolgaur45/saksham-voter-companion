@@ -1,1 +1,504 @@
-[]
+[
+  {
+    "id": "new-delhi",
+    "name": "New Delhi",
+    "state": "Delhi",
+    "search_keys": ["new delhi", "delhi", "connaught place", "cp", "ndls"],
+    "center": { "lat": 28.6315, "lng": 77.2167 },
+    "booths": [
+      {
+        "id": "nd-001",
+        "name": "Govt. Boys Sr. Sec. School No. 1, Connaught Place",
+        "address": "Block A, Connaught Place, New Delhi, Delhi 110001",
+        "lat": 28.6331,
+        "lng": 77.2197
+      },
+      {
+        "id": "nd-002",
+        "name": "Govt. Girls Sr. Sec. School, Janpath",
+        "address": "Janpath, New Delhi, Delhi 110001",
+        "lat": 28.6283,
+        "lng": 77.2177
+      },
+      {
+        "id": "nd-003",
+        "name": "Community Hall, Gole Market",
+        "address": "Gole Market, New Delhi, Delhi 110001",
+        "lat": 28.6356,
+        "lng": 77.2098
+      }
+    ]
+  },
+  {
+    "id": "mumbai-south",
+    "name": "Mumbai South",
+    "state": "Maharashtra",
+    "search_keys": ["mumbai south", "mumbai", "colaba", "fort", "cst", "bombay"],
+    "center": { "lat": 18.9220, "lng": 72.8347 },
+    "booths": [
+      {
+        "id": "ms-001",
+        "name": "Municipal School No. 1, Colaba",
+        "address": "Colaba Causeway, Colaba, Mumbai, Maharashtra 400005",
+        "lat": 18.9159,
+        "lng": 72.8311
+      },
+      {
+        "id": "ms-002",
+        "name": "Govt. Urdu School, Fort",
+        "address": "Near CST Station, Fort, Mumbai, Maharashtra 400001",
+        "lat": 18.9352,
+        "lng": 72.8358
+      },
+      {
+        "id": "ms-003",
+        "name": "Community Centre, Cuffe Parade",
+        "address": "Cuffe Parade, Mumbai, Maharashtra 400005",
+        "lat": 18.9077,
+        "lng": 72.8198
+      }
+    ]
+  },
+  {
+    "id": "chennai-central",
+    "name": "Chennai Central",
+    "state": "Tamil Nadu",
+    "search_keys": ["chennai central", "chennai", "madras", "egmore", "triplicane", "tn"],
+    "center": { "lat": 13.0827, "lng": 80.2707 },
+    "booths": [
+      {
+        "id": "cc-001",
+        "name": "Govt. Higher Secondary School, Egmore",
+        "address": "Egmore, Chennai, Tamil Nadu 600008",
+        "lat": 13.0784,
+        "lng": 80.2621
+      },
+      {
+        "id": "cc-002",
+        "name": "Municipal High School, Triplicane",
+        "address": "Triplicane High Road, Triplicane, Chennai, Tamil Nadu 600005",
+        "lat": 13.0569,
+        "lng": 80.2746
+      }
+    ]
+  },
+  {
+    "id": "kolkata-north",
+    "name": "Kolkata North",
+    "state": "West Bengal",
+    "search_keys": ["kolkata north", "kolkata", "calcutta", "shyambazar", "belgachia", "wb"],
+    "center": { "lat": 22.5937, "lng": 88.3685 },
+    "booths": [
+      {
+        "id": "kn-001",
+        "name": "Shyambazar Boys' School",
+        "address": "Shyambazar, Kolkata, West Bengal 700004",
+        "lat": 22.5982,
+        "lng": 88.3699
+      },
+      {
+        "id": "kn-002",
+        "name": "Govt. High School, Belgachia",
+        "address": "Belgachia Road, Kolkata, West Bengal 700037",
+        "lat": 22.5890,
+        "lng": 88.3641
+      }
+    ]
+  },
+  {
+    "id": "lucknow",
+    "name": "Lucknow",
+    "state": "Uttar Pradesh",
+    "search_keys": ["lucknow", "lko", "hazratganj", "uttar pradesh", "up", "gomti nagar"],
+    "center": { "lat": 26.8467, "lng": 80.9462 },
+    "booths": [
+      {
+        "id": "lko-001",
+        "name": "Govt. Inter College, Hazratganj",
+        "address": "Hazratganj, Lucknow, Uttar Pradesh 226001",
+        "lat": 26.8503,
+        "lng": 80.9451
+      },
+      {
+        "id": "lko-002",
+        "name": "Primary School, Gomti Nagar",
+        "address": "Gomti Nagar, Lucknow, Uttar Pradesh 226010",
+        "lat": 26.8573,
+        "lng": 80.9956
+      },
+      {
+        "id": "lko-003",
+        "name": "Intermediate College, Aminabad",
+        "address": "Aminabad, Lucknow, Uttar Pradesh 226018",
+        "lat": 26.8395,
+        "lng": 80.9298
+      }
+    ]
+  },
+  {
+    "id": "ahmedabad-east",
+    "name": "Ahmedabad East",
+    "state": "Gujarat",
+    "search_keys": ["ahmedabad east", "ahmedabad", "amdavad", "gomtipur", "bapunagar", "gujarat", "gj"],
+    "center": { "lat": 23.0225, "lng": 72.5714 },
+    "booths": [
+      {
+        "id": "ae-001",
+        "name": "Municipal School No. 14, Gomtipur",
+        "address": "Gomtipur, Ahmedabad, Gujarat 380021",
+        "lat": 23.0307,
+        "lng": 72.5891
+      },
+      {
+        "id": "ae-002",
+        "name": "Govt. School, Bapunagar",
+        "address": "Bapunagar, Ahmedabad, Gujarat 380024",
+        "lat": 23.0431,
+        "lng": 72.5968
+      }
+    ]
+  },
+  {
+    "id": "thiruvananthapuram",
+    "name": "Thiruvananthapuram",
+    "state": "Kerala",
+    "search_keys": ["thiruvananthapuram", "trivandrum", "palayam", "kerala", "kl", "tvm"],
+    "center": { "lat": 8.5241, "lng": 76.9366 },
+    "booths": [
+      {
+        "id": "tvm-001",
+        "name": "Govt. Model Boys Higher Secondary School",
+        "address": "Palayam, Thiruvananthapuram, Kerala 695034",
+        "lat": 8.5264,
+        "lng": 76.9402
+      },
+      {
+        "id": "tvm-002",
+        "name": "Corporation High School, Kowdiar",
+        "address": "Kowdiar, Thiruvananthapuram, Kerala 695003",
+        "lat": 8.5187,
+        "lng": 76.9451
+      }
+    ]
+  },
+  {
+    "id": "amritsar",
+    "name": "Amritsar",
+    "state": "Punjab",
+    "search_keys": ["amritsar", "golden temple", "hall bazaar", "punjab", "pb", "asr"],
+    "center": { "lat": 31.6340, "lng": 74.8723 },
+    "booths": [
+      {
+        "id": "asr-001",
+        "name": "Govt. Senior Secondary School, Hall Bazaar",
+        "address": "Hall Bazaar, Amritsar, Punjab 143001",
+        "lat": 31.6372,
+        "lng": 74.8765
+      },
+      {
+        "id": "asr-002",
+        "name": "Govt. School, Lawrence Road",
+        "address": "Lawrence Road, Amritsar, Punjab 143001",
+        "lat": 31.6418,
+        "lng": 74.8621
+      },
+      {
+        "id": "asr-003",
+        "name": "Municipal Primary School, Majitha Road",
+        "address": "Majitha Road, Amritsar, Punjab 143001",
+        "lat": 31.6289,
+        "lng": 74.8831
+      }
+    ]
+  },
+  {
+    "id": "jaipur",
+    "name": "Jaipur",
+    "state": "Rajasthan",
+    "search_keys": ["jaipur", "pink city", "mi road", "rajasthan", "rj", "civil lines"],
+    "center": { "lat": 26.9124, "lng": 75.7873 },
+    "booths": [
+      {
+        "id": "jp-001",
+        "name": "Govt. Senior Secondary School, Civil Lines",
+        "address": "Civil Lines, Jaipur, Rajasthan 302006",
+        "lat": 26.9198,
+        "lng": 75.8012
+      },
+      {
+        "id": "jp-002",
+        "name": "Municipal School, Sindhi Camp",
+        "address": "Sindhi Camp, Jaipur, Rajasthan 302001",
+        "lat": 26.9145,
+        "lng": 75.7941
+      },
+      {
+        "id": "jp-003",
+        "name": "Community Hall, Bani Park",
+        "address": "Bani Park, Jaipur, Rajasthan 302016",
+        "lat": 26.9231,
+        "lng": 75.7801
+      }
+    ]
+  },
+  {
+    "id": "bangalore-south",
+    "name": "Bangalore South",
+    "state": "Karnataka",
+    "search_keys": ["bangalore south", "bangalore", "bengaluru", "jayanagar", "jp nagar", "karnataka", "ka", "blr"],
+    "center": { "lat": 12.9147, "lng": 77.5947 },
+    "booths": [
+      {
+        "id": "bs-001",
+        "name": "Govt. High School, Jayanagar 4th Block",
+        "address": "4th Block, Jayanagar, Bengaluru, Karnataka 560011",
+        "lat": 12.9282,
+        "lng": 77.5842
+      },
+      {
+        "id": "bs-002",
+        "name": "Corporation School, JP Nagar",
+        "address": "JP Nagar 2nd Phase, Bengaluru, Karnataka 560078",
+        "lat": 12.9063,
+        "lng": 77.5894
+      }
+    ]
+  },
+  {
+    "id": "visakhapatnam",
+    "name": "Visakhapatnam",
+    "state": "Andhra Pradesh",
+    "search_keys": ["visakhapatnam", "vizag", "jagadamba", "gajuwaka", "andhra pradesh", "ap"],
+    "center": { "lat": 17.6868, "lng": 83.2185 },
+    "booths": [
+      {
+        "id": "vzg-001",
+        "name": "Govt. High School, Jagadamba",
+        "address": "Jagadamba Junction, Visakhapatnam, Andhra Pradesh 530002",
+        "lat": 17.7133,
+        "lng": 83.2985
+      },
+      {
+        "id": "vzg-002",
+        "name": "Municipal School, Gajuwaka",
+        "address": "Gajuwaka, Visakhapatnam, Andhra Pradesh 530026",
+        "lat": 17.6889,
+        "lng": 83.2203
+      }
+    ]
+  },
+  {
+    "id": "hyderabad",
+    "name": "Hyderabad",
+    "state": "Telangana",
+    "search_keys": ["hyderabad", "abids", "nampally", "telangana", "ts", "hyd", "secunderabad"],
+    "center": { "lat": 17.3850, "lng": 78.4867 },
+    "booths": [
+      {
+        "id": "hyd-001",
+        "name": "Govt. High School, Abids",
+        "address": "Abids, Hyderabad, Telangana 500001",
+        "lat": 17.3932,
+        "lng": 78.4754
+      },
+      {
+        "id": "hyd-002",
+        "name": "Municipal School, Nampally",
+        "address": "Nampally, Hyderabad, Telangana 500001",
+        "lat": 17.3841,
+        "lng": 78.4661
+      },
+      {
+        "id": "hyd-003",
+        "name": "Community Centre, Koti",
+        "address": "Koti, Hyderabad, Telangana 500195",
+        "lat": 17.3779,
+        "lng": 78.4879
+      }
+    ]
+  },
+  {
+    "id": "bhopal",
+    "name": "Bhopal",
+    "state": "Madhya Pradesh",
+    "search_keys": ["bhopal", "tt nagar", "arera colony", "madhya pradesh", "mp"],
+    "center": { "lat": 23.2599, "lng": 77.4126 },
+    "booths": [
+      {
+        "id": "bpl-001",
+        "name": "Govt. Boys Higher Secondary School, TT Nagar",
+        "address": "TT Nagar, Bhopal, Madhya Pradesh 462003",
+        "lat": 23.2361,
+        "lng": 77.4089
+      },
+      {
+        "id": "bpl-002",
+        "name": "Primary School, Arera Colony",
+        "address": "Arera Colony, Bhopal, Madhya Pradesh 462016",
+        "lat": 23.2198,
+        "lng": 77.4342
+      }
+    ]
+  },
+  {
+    "id": "patna-sahib",
+    "name": "Patna Sahib",
+    "state": "Bihar",
+    "search_keys": ["patna sahib", "patna", "patna city", "kankarbagh", "bihar", "br"],
+    "center": { "lat": 25.5941, "lng": 85.1376 },
+    "booths": [
+      {
+        "id": "ptn-001",
+        "name": "Govt. Middle School, Patna City",
+        "address": "Patna City, Patna, Bihar 800008",
+        "lat": 25.5934,
+        "lng": 85.1562
+      },
+      {
+        "id": "ptn-002",
+        "name": "Primary School, Kankarbagh",
+        "address": "Kankarbagh, Patna, Bihar 800020",
+        "lat": 25.5832,
+        "lng": 85.1451
+      }
+    ]
+  },
+  {
+    "id": "bhubaneswar",
+    "name": "Bhubaneswar",
+    "state": "Odisha",
+    "search_keys": ["bhubaneswar", "bbsr", "unit 4", "saheed nagar", "odisha", "od"],
+    "center": { "lat": 20.2961, "lng": 85.8245 },
+    "booths": [
+      {
+        "id": "bbsr-001",
+        "name": "Govt. High School, Unit 4",
+        "address": "Unit 4, Bhubaneswar, Odisha 751001",
+        "lat": 20.2992,
+        "lng": 85.8278
+      },
+      {
+        "id": "bbsr-002",
+        "name": "Primary School, Saheed Nagar",
+        "address": "Saheed Nagar, Bhubaneswar, Odisha 751007",
+        "lat": 20.2879,
+        "lng": 85.8487
+      }
+    ]
+  },
+  {
+    "id": "guwahati",
+    "name": "Guwahati",
+    "state": "Assam",
+    "search_keys": ["guwahati", "gauhati", "fancy bazar", "panbazar", "assam", "as", "gwl"],
+    "center": { "lat": 26.1445, "lng": 91.7362 },
+    "booths": [
+      {
+        "id": "gwl-001",
+        "name": "Govt. High School, Fancy Bazar",
+        "address": "Fancy Bazar, Guwahati, Assam 781001",
+        "lat": 26.1853,
+        "lng": 91.7524
+      },
+      {
+        "id": "gwl-002",
+        "name": "Municipal School, Panbazar",
+        "address": "Panbazar, Guwahati, Assam 781001",
+        "lat": 26.1901,
+        "lng": 91.7479
+      }
+    ]
+  },
+  {
+    "id": "ranchi",
+    "name": "Ranchi",
+    "state": "Jharkhand",
+    "search_keys": ["ranchi", "doranda", "harmu", "jharkhand", "jh"],
+    "center": { "lat": 23.3441, "lng": 85.3096 },
+    "booths": [
+      {
+        "id": "rnc-001",
+        "name": "Govt. High School, Doranda",
+        "address": "Doranda, Ranchi, Jharkhand 834002",
+        "lat": 23.3374,
+        "lng": 85.3247
+      },
+      {
+        "id": "rnc-002",
+        "name": "Primary School, Harmu",
+        "address": "Harmu Housing Colony, Ranchi, Jharkhand 834002",
+        "lat": 23.3612,
+        "lng": 85.3041
+      }
+    ]
+  },
+  {
+    "id": "faridabad",
+    "name": "Faridabad",
+    "state": "Haryana",
+    "search_keys": ["faridabad", "nit", "sector 15", "haryana", "hr", "fbd"],
+    "center": { "lat": 28.4089, "lng": 77.3178 },
+    "booths": [
+      {
+        "id": "fbd-001",
+        "name": "Govt. Senior Secondary School, NIT",
+        "address": "NIT, Faridabad, Haryana 121001",
+        "lat": 28.3892,
+        "lng": 77.3134
+      },
+      {
+        "id": "fbd-002",
+        "name": "Municipal Primary School, Sector 15",
+        "address": "Sector 15, Faridabad, Haryana 121007",
+        "lat": 28.4213,
+        "lng": 77.3041
+      }
+    ]
+  },
+  {
+    "id": "shimla",
+    "name": "Shimla",
+    "state": "Himachal Pradesh",
+    "search_keys": ["shimla", "simla", "the ridge", "sanjauli", "himachal pradesh", "hp"],
+    "center": { "lat": 31.1048, "lng": 77.1734 },
+    "booths": [
+      {
+        "id": "slm-001",
+        "name": "Govt. Senior Secondary School, Sanjauli",
+        "address": "Sanjauli, Shimla, Himachal Pradesh 171006",
+        "lat": 31.0967,
+        "lng": 77.1812
+      },
+      {
+        "id": "slm-002",
+        "name": "Primary School, Chhota Shimla",
+        "address": "Chhota Shimla, Shimla, Himachal Pradesh 171002",
+        "lat": 31.1131,
+        "lng": 77.1671
+      }
+    ]
+  },
+  {
+    "id": "dehradun",
+    "name": "Dehradun",
+    "state": "Uttarakhand",
+    "search_keys": ["dehradun", "dehra dun", "rajpur road", "prem nagar", "uttarakhand", "uk", "ddn"],
+    "center": { "lat": 30.3165, "lng": 78.0322 },
+    "booths": [
+      {
+        "id": "ddn-001",
+        "name": "Govt. Inter College, Rajpur Road",
+        "address": "Rajpur Road, Dehradun, Uttarakhand 248001",
+        "lat": 30.3312,
+        "lng": 78.0412
+      },
+      {
+        "id": "ddn-002",
+        "name": "Primary School, Prem Nagar",
+        "address": "Prem Nagar, Dehradun, Uttarakhand 248007",
+        "lat": 30.2987,
+        "lng": 78.0187
+      }
+    ]
+  }
+]

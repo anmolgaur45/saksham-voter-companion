@@ -1,9 +1,16 @@
+import BoothClient from "./booth-client";
+
 export const metadata = { title: "Polling Booth Finder — Saksham" };
 
-export default function BoothPage() {
+export default async function BoothPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   return (
-    <main className="min-h-screen flex items-center justify-center p-8">
-      <p className="text-muted-foreground">Polling booth finder — coming in Phase 3.</p>
+    <main className="min-h-screen">
+      <BoothClient initialQuery={q} />
     </main>
   );
 }
