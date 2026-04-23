@@ -18,6 +18,7 @@ export interface ChatResponse {
   citations: Citation[];
   booth_query?: string;
   verdict?: string;
+  grounded?: boolean;
 }
 
 export interface Booth {

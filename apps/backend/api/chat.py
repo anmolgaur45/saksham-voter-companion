@@ -33,6 +33,7 @@ class ChatResponse(BaseModel):
     citations: list[Citation] = []
     booth_query: str | None = None
     verdict: str | None = None
+    grounded: bool | None = None
 
 
 @router.post("/api/chat", response_model=ChatResponse)
@@ -54,4 +55,5 @@ async def chat(req: ChatRequest) -> ChatResponse:
         citations=[Citation(**c) for c in result.get("citations", [])],
         booth_query=result.get("booth_query"),
         verdict=result.get("verdict"),
+        grounded=result.get("grounded"),
     )

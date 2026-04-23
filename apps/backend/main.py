@@ -7,7 +7,7 @@ from api.chat import router as chat_router
 from api.tts import router as tts_router
 from core.config import settings
 from core.exceptions import add_exception_handler
-from core.logging import configure_logging
+from core.logging import RequestIdMiddleware, configure_logging
 
 
 @asynccontextmanager
@@ -18,6 +18,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="saksham-backend", version="0.1.0", lifespan=lifespan)
 
+app.add_middleware(RequestIdMiddleware)
 add_exception_handler(app)
 
 app.include_router(chat_router)

@@ -42,7 +42,8 @@ export default function BoothClient({ initialQuery }: { initialQuery?: string })
   }
 
   useEffect(() => {
-    if (initialQuery) search(initialQuery);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (initialQuery) void search(initialQuery);
   }, [initialQuery]);
 
   return (
@@ -111,15 +112,18 @@ export default function BoothClient({ initialQuery }: { initialQuery?: string })
 
           <ul className="divide-y rounded-lg border">
             {data.booths.map((booth, i) => (
-              <li
-                key={booth.id}
-                className="px-4 py-3 text-sm cursor-pointer hover:bg-muted/50 transition-colors"
-                onClick={() => setSelected(booth)}
-              >
-                <p className="font-medium">
-                  {i + 1}. {booth.name}
-                </p>
-                <p className="text-muted-foreground mt-0.5">{booth.address}</p>
+              <li key={booth.id}>
+                <button
+                  type="button"
+                  className="w-full px-4 py-3 text-sm text-left hover:bg-muted/50 transition-colors"
+                  onClick={() => setSelected(booth)}
+                  aria-label={`${booth.name} — ${booth.address}`}
+                >
+                  <p className="font-medium">
+                    {i + 1}. {booth.name}
+                  </p>
+                  <p className="text-muted-foreground mt-0.5">{booth.address}</p>
+                </button>
               </li>
             ))}
           </ul>

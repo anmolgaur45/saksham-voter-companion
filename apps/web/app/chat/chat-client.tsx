@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CitationCard } from "@/components/CitationCard";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { VoicePlayButton } from "@/components/VoicePlayButton";
 import type { Citation } from "@/lib/api";
@@ -16,6 +16,7 @@ interface Message {
   content: string;
   citations?: Citation[];
   booth_query?: string;
+  grounded?: boolean;
 }
 
 export default function ChatClient() {
@@ -43,6 +44,7 @@ export default function ChatClient() {
           content: res.response,
           citations: res.citations,
           booth_query: res.booth_query,
+          grounded: res.grounded,
         },
       ]);
     } catch {
@@ -73,23 +75,21 @@ export default function ChatClient() {
             key={i}
             className={`mb-3 flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
           >
-            <span
-              className={`inline-block px-3 py-2 rounded-lg max-w-[80%] text-sm ${
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted"
-              }`}
-            >
-              {msg.content}
-            </span>
+            {msg.role === "user" ? (
+              <span className="inline-block px-3 py-2 rounded-lg max-w-[80%] text-sm bg-primary text-primary-foreground">
+                {msg.content}
+              </span>
+            ) : (
+              <div className="px-3 py-2 rounded-lg max-w-[80%] text-sm bg-muted [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4 [&_li]:my-0.5 [&_p]:my-1 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0 [&_strong]:font-semibold">
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              </div>
+            )}
             {msg.role === "assistant" && (
               <div className="flex flex-col gap-1 max-w-[80%]">
-                {msg.citations && msg.citations.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {msg.citations.map((c, j) => (
-                      <CitationCard key={j} citation={c} />
-                    ))}
-                  </div>
+                {msg.grounded === true && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Sourced from official ECI documents
+                  </p>
                 )}
                 {msg.booth_query && (
                   <Link

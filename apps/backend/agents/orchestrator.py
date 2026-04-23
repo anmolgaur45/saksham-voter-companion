@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
-from enum import Enum
+import time
+from enum import StrEnum
 
+import structlog
 import vertexai
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
@@ -11,19 +13,24 @@ from agents.knowledge import KnowledgeAgent
 from agents.locator import LocatorAgent
 from agents.verifier import VerifierAgent
 from core.config import settings
+from services.firestore import get_session
+
+_log = structlog.get_logger()
 
 _CLASSIFIER_PROMPT = """\
 Classify the user message into exactly one intent category.
 
 Categories:
 - knowledge: factual questions about elections — voter registration process, EVM, Model Code of Conduct, forms, eligibility, timelines, polling day procedures, vote counting. Use this for ANY "how do I" or "what is" question about elections.
-- locator: finding a specific polling booth or constituency, "where do I vote", "show me on map"
+- locator: finding a polling booth or constituency — includes bare city/constituency names like "Chennai", "Lucknow", "Mumbai", "Delhi", or any place name given as a follow-up to a location question
 - verifier: asking whether a specific claim or rumour is true or false
 - journey: user explicitly asks to be guided through a checklist or says "guide me", "walk me through", "what are the steps for me" (NOT a general how-to question)
-- greeting: hi, hello, thanks, bye, what can you do
-- out_of_scope: political party opinions, candidate recommendations, election predictions, unrelated topics
+- greeting: hi, hello, thanks, bye, what can you do, okay, yes, no (short acknowledgements with no election content)
+- out_of_scope: political party opinions, candidate recommendations, election predictions, clearly unrelated topics
 
 When in doubt between knowledge and journey, choose knowledge.
+A bare place name (city or constituency) = locator.
+Short acknowledgements (yes, no, okay, sure, got it) = greeting.
 
 Respond with JSON only: {"intent": "<category>"}"""
 
@@ -39,7 +46,7 @@ _OUT_OF_SCOPE = (
 )
 
 
-class Intent(str, Enum):
+class Intent(StrEnum):
     knowledge = "knowledge"
     locator = "locator"
     verifier = "verifier"
@@ -63,34 +70,64 @@ class OrchestratorAgent:
         message: str,
         agent_override: str | None = None,
     ) -> dict:
+        structlog.contextvars.bind_contextvars(session_id=session_id)
+        t0 = time.monotonic()
+
         if agent_override:
             try:
                 intent = Intent(agent_override)
             except ValueError:
                 intent = Intent.knowledge
         else:
-            cr = self._classifier.generate_content(
-                contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
-                generation_config=GenerationConfig(
-                    response_mime_type="application/json",
-                    temperature=0,
-                ),
-            )
-            try:
-                intent = Intent(json.loads(cr.text).get("intent", "knowledge"))
-            except Exception:
-                intent = Intent.knowledge
+            # If an active journey session exists, keep routing there unless
+            # the message is clearly a different intent (locator/verifier/knowledge question)
+            session = await get_session(session_id)
+            if session.get("journey_active"):
+                cr = self._classifier.generate_content(
+                    contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
+                    generation_config=GenerationConfig(
+                        response_mime_type="application/json",
+                        temperature=0,
+                    ),
+                )
+                try:
+                    classified = Intent(json.loads(cr.text).get("intent", "journey"))
+                except Exception:
+                    classified = Intent.journey
+                # Only break out of journey for explicit different intents
+                if classified in (Intent.knowledge, Intent.locator, Intent.verifier):
+                    intent = classified
+                else:
+                    intent = Intent.journey
+            else:
+                cr = self._classifier.generate_content(
+                    contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
+                    generation_config=GenerationConfig(
+                        response_mime_type="application/json",
+                        temperature=0,
+                    ),
+                )
+                try:
+                    intent = Intent(json.loads(cr.text).get("intent", "knowledge"))
+                except Exception:
+                    intent = Intent.knowledge
+
+        _log.info("dispatch", agent_name=intent.value)
 
         if intent == Intent.knowledge:
-            return await self._knowledge.run(message)
-        if intent == Intent.locator:
-            return await self._locator.run(message)
-        if intent == Intent.verifier:
-            return await self._verifier.run(message)
-        if intent == Intent.journey:
-            return await self._journey.run(session_id, message)
-        if intent == Intent.greeting:
-            return {"response": _GREETING, "citations": [], "agent": "orchestrator"}
-        if intent == Intent.out_of_scope:
-            return {"response": _OUT_OF_SCOPE, "citations": [], "agent": "orchestrator"}
-        return {"response": "This feature is coming soon.", "citations": [], "agent": intent.value}
+            result = await self._knowledge.run(message)
+        elif intent == Intent.locator:
+            result = await self._locator.run(message)
+        elif intent == Intent.verifier:
+            result = await self._verifier.run(message)
+        elif intent == Intent.journey:
+            result = await self._journey.run(session_id, message)
+        elif intent == Intent.greeting:
+            result = {"response": _GREETING, "citations": [], "agent": "orchestrator"}
+        elif intent == Intent.out_of_scope:
+            result = {"response": _OUT_OF_SCOPE, "citations": [], "agent": "orchestrator"}
+        else:
+            result = {"response": "This feature is coming soon.", "citations": [], "agent": intent.value}
+
+        _log.info("done", agent_name=intent.value, latency_ms=round((time.monotonic() - t0) * 1000))
+        return result

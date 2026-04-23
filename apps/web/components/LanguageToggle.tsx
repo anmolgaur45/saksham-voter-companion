@@ -27,12 +27,12 @@ interface Props {
 }
 
 export function LanguageToggle({ onChange }: Props) {
-  const [active, setActive] = useState("en");
+  const [active, setActive] = useState(() => getLangFromCookie());
 
   useEffect(() => {
-    const saved = getLangFromCookie();
-    setActive(saved);
-    onChange(saved);
+    onChange(active);
+  // onChange is a stable prop reference — no need to re-run when it changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function select(code: string) {
@@ -42,7 +42,7 @@ export function LanguageToggle({ onChange }: Props) {
   }
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1" role="group" aria-label="Select language">
       {LANGUAGES.map((l) => (
         <Button
           key={l.code}
@@ -50,6 +50,8 @@ export function LanguageToggle({ onChange }: Props) {
           variant={active === l.code ? "default" : "outline"}
           className="text-xs px-2 h-7"
           onClick={() => select(l.code)}
+          aria-pressed={active === l.code}
+          aria-label={l.label}
         >
           {l.label}
         </Button>

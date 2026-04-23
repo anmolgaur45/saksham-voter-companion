@@ -1,2 +1,186 @@
-# Phase 4.1: 30 Q&A pairs sourced from ECI Voter's Handbook
-# Fields: id, question, expected_answer_keywords, expected_citation_source, category
+questions:
+  # eligibility
+  - id: e01
+    question: What is the minimum age to register as a voter in India?
+    expected_answer_keywords: ["18", "eighteen", "qualifying date"]
+    expected_citation_source: Form_6_English
+    category: eligibility
+
+  - id: e02
+    question: Can an NRI register as a voter in India?
+    expected_answer_keywords: ["NRI", "non-resident", "overseas", "passport"]
+    expected_citation_source: Form_6_English
+    category: eligibility
+
+  - id: e03
+    question: What disqualifies a person from being registered as a voter?
+    expected_answer_keywords: ["unsound mind", "corrupt", "illegal practice", "disqualified"]
+    expected_citation_source: Form_6_English
+    category: eligibility
+
+  - id: e04
+    question: Can a person be registered in more than one constituency?
+    expected_answer_keywords: ["one", "single", "constituency", "ordinarily resident"]
+    expected_citation_source: Form_6_English
+    category: eligibility
+
+  - id: e05
+    question: What does ordinarily resident mean for voter registration?
+    expected_answer_keywords: ["ordinarily resident", "reside", "address"]
+    expected_citation_source: Form_6_English
+    category: eligibility
+
+  # registration
+  - id: r01
+    question: Which form must a new voter submit to register?
+    expected_answer_keywords: ["Form 6", "Form-6", "inclusion"]
+    expected_citation_source: Form_6_English
+    category: registration
+
+  - id: r02
+    question: How do I apply to have my name deleted from the electoral roll?
+    expected_answer_keywords: ["Form 7", "Form-7", "objection", "deletion"]
+    expected_citation_source: Form_7_English
+    category: registration
+
+  - id: r03
+    question: What form do I use to correct a mistake in my voter details?
+    expected_answer_keywords: ["Form 8", "Form-8", "correction", "particulars"]
+    expected_citation_source: Form_8_English
+    category: registration
+
+  - id: r04
+    question: Who is the Electoral Registration Officer?
+    expected_answer_keywords: ["Electoral Registration Officer", "ERO", "constituency"]
+    expected_citation_source: Form_6_English
+    category: registration
+
+  - id: r05
+    question: What documents are needed to prove date of birth for voter registration?
+    expected_answer_keywords: ["birth certificate", "Aadhaar", "PAN", "passport", "driving licence"]
+    expected_citation_source: Form_6_English
+    category: registration
+
+  - id: r06
+    question: What address proof is accepted for voter registration?
+    expected_answer_keywords: ["utility bill", "Aadhaar", "bank passbook", "passport"]
+    expected_citation_source: Form_6_English
+    category: registration
+
+  - id: r07
+    question: What is Form 6A used for?
+    expected_answer_keywords: ["NRI", "non-resident Indian", "overseas"]
+    expected_citation_source: Form_6_English
+    category: registration
+
+  # polling_day
+  - id: p01
+    question: What identity documents can I use at the polling booth on election day?
+    expected_answer_keywords: ["EPIC", "voter ID", "Aadhaar", "passport", "photo identity"]
+    expected_citation_source: EVM User Manual
+    category: polling_day
+
+  - id: p02
+    question: What is the step by step procedure for casting a vote using an EVM?
+    expected_answer_keywords: ["ballot unit", "blue button", "press", "symbol", "candidate"]
+    expected_citation_source: EVM User Manual
+    category: polling_day
+
+  - id: p03
+    question: What is a VVPAT machine?
+    expected_answer_keywords: ["Voter Verifiable Paper Audit Trail", "paper slip", "printed", "symbol"]
+    expected_citation_source: EVM User Manual
+    category: polling_day
+
+  - id: p04
+    question: What happens if a voter is challenged at the polling booth?
+    expected_answer_keywords: ["challenge", "presiding officer", "declaration", "oath"]
+    expected_citation_source: EVM User Manual
+    category: polling_day
+
+  - id: p05
+    question: Can a voter cast a vote if their name is not on the electoral roll?
+    expected_answer_keywords: ["not registered", "electoral roll", "cannot", "not entitled"]
+    expected_citation_source: EVM User Manual
+    category: polling_day
+
+  # counting
+  - id: c01
+    question: How are votes counted after polling day?
+    expected_answer_keywords: ["counting", "Returning Officer", "round", "table"]
+    expected_citation_source: EVM Manual
+    category: counting
+
+  - id: c02
+    question: What is the role of counting agents during vote counting?
+    expected_answer_keywords: ["counting agent", "candidate", "scrutinize", "observe", "appointed"]
+    expected_citation_source: EVM Manual
+    category: counting
+
+  - id: c03
+    question: Under what circumstances can a recount be demanded?
+    expected_answer_keywords: ["recount", "margin", "Returning Officer", "request"]
+    expected_citation_source: EVM Manual
+    category: counting
+
+  # mcc
+  - id: m01
+    question: When does the Model Code of Conduct come into force?
+    expected_answer_keywords: ["announcement", "election schedule", "notification", "comes into force"]
+    expected_citation_source: Manual on Model Code of Conduct
+    category: mcc
+
+  - id: m02
+    question: What does the Model Code of Conduct say about election rallies and public meetings?
+    expected_answer_keywords: ["rally", "permission", "venue", "police", "inform"]
+    expected_citation_source: Manual on Model Code of Conduct
+    category: mcc
+
+  - id: m03
+    question: What are the restrictions on government resources during elections?
+    expected_answer_keywords: ["government vehicle", "official", "misuse", "machinery"]
+    expected_citation_source: Manual on Model Code of Conduct
+    category: mcc
+
+  - id: m04
+    question: What does the Model Code of Conduct say about vote buying and bribery?
+    expected_answer_keywords: ["bribery", "inducement", "liquor", "cash", "corrupt practice"]
+    expected_citation_source: Manual on Model Code of Conduct
+    category: mcc
+
+  - id: m05
+    question: Can political parties display posters on government property during elections?
+    expected_answer_keywords: ["government property", "wall", "poster", "banner", "prohibited"]
+    expected_citation_source: Manual on Model Code of Conduct
+    category: mcc
+
+  # forms
+  - id: f01
+    question: What personal information does Form 6 require from the applicant?
+    expected_answer_keywords: ["name", "surname", "father", "date of birth", "address", "photo"]
+    expected_citation_source: Form_6_English
+    category: forms
+
+  - id: f02
+    question: When should Form 7 be filed and what is its purpose?
+    expected_answer_keywords: ["Form 7", "objection", "inclusion", "duplicate", "deceased"]
+    expected_citation_source: Form_7_English
+    category: forms
+
+  - id: f03
+    question: What types of corrections can be made using Form 8?
+    expected_answer_keywords: ["Form 8", "name", "address", "photo", "correction"]
+    expected_citation_source: Form_8_English
+    category: forms
+
+  - id: f04
+    question: What is an EPIC card and who issues it?
+    expected_answer_keywords: ["Electoral Photo Identity Card", "EPIC", "voter ID card", "photo"]
+    expected_citation_source: Form_6_English
+    category: forms
+
+  - id: f05
+    question: How do I transfer my voter registration when I move to a new address?
+    expected_answer_keywords: ["Form 8A", "transposition", "shift", "moved", "new address"]
+    expected_citation_source: Form_8_English
+    category: forms

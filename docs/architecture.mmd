@@ -1,1 +1,50 @@
-%% Mermaid architecture diagram — added in Phase 4.3
+flowchart TD
+    User(["User\n(browser)"])
+
+    subgraph CR_Web["Cloud Run — saksham-web"]
+        Next["Next.js 15\nApp Router"]
+    end
+
+    subgraph CR_Back["Cloud Run — saksham-backend"]
+        Orch["Orchestrator Agent\n(intent classifier)"]
+
+        subgraph Agents["Specialist Agents"]
+            KA["Knowledge Agent"]
+            LA["Locator Agent"]
+            JA["Journey Agent"]
+            VA["Verifier Agent"]
+        end
+
+        Orch --> KA
+        Orch --> LA
+        Orch --> JA
+        Orch --> VA
+    end
+
+    subgraph GCP["Google Cloud"]
+        VAI["Vertex AI\nGemini 2.5 Flash"]
+        VAS["Vertex AI Search\n(ECI documents)"]
+        Maps["Maps Platform"]
+        FS["Firestore"]
+        TR["Cloud Translation"]
+        TTS["Cloud Text-to-Speech"]
+        LOG["Cloud Logging"]
+    end
+
+    User -->|"HTTPS"| Next
+    Next -->|"Server Action\n(ID token auth)"| Orch
+
+    KA --> VAI
+    KA --> VAS
+    LA --> VAI
+    LA --> Maps
+    LA --> FS
+    JA --> VAI
+    JA --> FS
+    VA --> VAI
+    VA --> VAS
+    Orch --> VAI
+
+    Next --> TR
+    Next --> TTS
+    CR_Back --> LOG

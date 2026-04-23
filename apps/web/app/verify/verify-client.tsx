@@ -66,7 +66,9 @@ export default function VerifyClient() {
       </div>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <label htmlFor="claim-input" className="sr-only">Claim to verify</label>
         <textarea
+          id="claim-input"
           value={claim}
           onChange={(e) => setClaim(e.target.value)}
           placeholder="e.g. EVMs can be hacked remotely during counting."

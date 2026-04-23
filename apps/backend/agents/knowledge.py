@@ -13,6 +13,15 @@ If the retrieved documents genuinely do not contain enough information to answer
 "I don't have a verified source for this — please check eci.gov.in directly."
 Do not speculate or add information not present in the sources."""
 
+_FALLBACK_SYSTEM = """\
+You are Saksham, an assistant for Indian voter education.
+Answer the user's question about Indian elections, voter registration, the Election Commission
+of India, polling procedures, EVMs, Model Code of Conduct, or related electoral processes.
+Be concise (under 120 words). Use bullet points for lists where helpful.
+Stick strictly to Indian elections and voting topics. If the question is unrelated, say you can only help with Indian elections.
+Do not discuss political parties, candidates, or voting recommendations.
+Your answer is based on general knowledge, not official ECI documents. Advise the user to confirm specific procedural details at eci.gov.in."""
+
 
 class KnowledgeAgent:
     def __init__(self) -> None:
@@ -20,6 +29,10 @@ class KnowledgeAgent:
         self._model = GenerativeModel(
             model_name=settings.vertex_model,
             system_instruction=_SYSTEM,
+        )
+        self._fallback_model = GenerativeModel(
+            model_name=settings.vertex_model,
+            system_instruction=_FALLBACK_SYSTEM,
         )
         self._tool = build_search_tool(
             settings.gcp_project_id,
@@ -32,9 +45,20 @@ class KnowledgeAgent:
             tools=[self._tool],
             generation_config=GenerationConfig(temperature=0),
         )
-        text = (
-            response.text
-            if response.candidates
-            else "I don't have a verified source for this — please check eci.gov.in directly."
+        citations = extract_citations(response)
+        text = response.text if response.candidates else ""
+
+        if citations and text.strip() and "I don't have a verified source" not in text:
+            return {"response": text, "citations": citations, "agent": "knowledge", "grounded": True}
+
+        # Grounding returned no sources — fall back to ungrounded Gemini
+        fb = self._fallback_model.generate_content(
+            contents=message,
+            generation_config=GenerationConfig(temperature=0.2),
         )
-        return {"response": text, "citations": extract_citations(response), "agent": "knowledge"}
+        fb_text = (
+            fb.text
+            if fb.candidates
+            else "I don't have enough information on this. Please check eci.gov.in directly."
+        )
+        return {"response": fb_text, "citations": [], "agent": "knowledge", "grounded": False}

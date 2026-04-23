@@ -41,6 +41,7 @@ class JourneyAgent:
         pending = [s for s in _STEPS if s not in completed]
 
         current_step = pending[0] if pending else "step_polling_day"
+        await update_session(session_id, {"journey_active": bool(pending)})
 
         prompt = (
             f"Completed steps so far: {completed}\n"
