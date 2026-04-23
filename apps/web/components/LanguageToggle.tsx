@@ -27,11 +27,14 @@ interface Props {
 }
 
 export function LanguageToggle({ onChange }: Props) {
-  const [active, setActive] = useState(() => getLangFromCookie());
+  const [active, setActive] = useState("en");
 
   useEffect(() => {
-    onChange(active);
-  // onChange is a stable prop reference — no need to re-run when it changes
+    const lang = getLangFromCookie();
+    if (lang !== "en") {
+      setActive(lang);
+      onChange(lang);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

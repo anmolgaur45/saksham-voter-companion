@@ -70,6 +70,21 @@ class OrchestratorAgent:
         message: str,
         agent_override: str | None = None,
     ) -> dict:
+        """Classify intent and dispatch to the appropriate specialist agent.
+
+        If a journey session is active, keeps routing to the Journey agent
+        unless the message clearly signals a different intent (knowledge,
+        locator, or verifier).
+
+        Args:
+            session_id: Anonymous session UUID used for journey state lookup.
+            message: User message in English.
+            agent_override: Optional intent string to skip classification.
+
+        Returns:
+            Agent response dict; shape varies by agent but always contains
+            response (str), citations (list), and agent (str).
+        """
         structlog.contextvars.bind_contextvars(session_id=session_id)
         t0 = time.monotonic()
 
@@ -127,7 +142,11 @@ class OrchestratorAgent:
         elif intent == Intent.out_of_scope:
             result = {"response": _OUT_OF_SCOPE, "citations": [], "agent": "orchestrator"}
         else:
-            result = {"response": "This feature is coming soon.", "citations": [], "agent": intent.value}
+            result = {
+                "response": "This feature is coming soon.",
+                "citations": [],
+                "agent": intent.value,
+            }
 
         _log.info("done", agent_name=intent.value, latency_ms=round((time.monotonic() - t0) * 1000))
         return result

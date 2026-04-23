@@ -40,6 +40,18 @@ class KnowledgeAgent:
         )
 
     async def run(self, message: str) -> dict:
+        """Answer an election-related question, grounded in ECI documents.
+
+        Attempts Vertex AI Search grounding first. Falls back to ungrounded
+        Gemini if grounding returns no citations or produces empty text.
+
+        Args:
+            message: User question in English.
+
+        Returns:
+            Dict with keys: response (str), citations (list), agent ("knowledge"),
+            grounded (bool — True if ECI sources were retrieved).
+        """
         response = self._model.generate_content(
             contents=message,
             tools=[self._tool],
@@ -49,7 +61,12 @@ class KnowledgeAgent:
         text = response.text if response.candidates else ""
 
         if citations and text.strip() and "I don't have a verified source" not in text:
-            return {"response": text, "citations": citations, "agent": "knowledge", "grounded": True}
+            return {
+                "response": text,
+                "citations": citations,
+                "agent": "knowledge",
+                "grounded": True,
+            }
 
         # Grounding returned no sources — fall back to ungrounded Gemini
         fb = self._fallback_model.generate_content(

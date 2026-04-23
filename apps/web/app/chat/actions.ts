@@ -1,7 +1,7 @@
 "use server";
 
-import { chat, fetchBooth, fetchTts } from "@/lib/api";
-import type { BoothData, ChatResponse } from "@/lib/api";
+import { chat, fetchBooth, fetchConstituencyHistory, fetchTimeline, fetchTts, searchConstituencies, translateTexts as apiBatchTranslate } from "@/lib/api";
+import type { BoothData, ChatResponse, ConstituencyHistory, TimelinePhase } from "@/lib/api";
 import { getBackendAuthHeader } from "@/lib/auth";
 
 export async function sendMessage(
@@ -28,4 +28,24 @@ export async function synthesizeSpeech(
 ): Promise<string> {
   const authHeader = await getBackendAuthHeader();
   return fetchTts(text, language, authHeader);
+}
+
+export async function getTimeline(lang = "en"): Promise<TimelinePhase[]> {
+  const authHeader = await getBackendAuthHeader();
+  return fetchTimeline(lang, authHeader);
+}
+
+export async function translateContent(texts: string[], lang: string): Promise<string[]> {
+  const authHeader = await getBackendAuthHeader();
+  return apiBatchTranslate(texts, lang, authHeader);
+}
+
+export async function getConstituencyHistory(pcName: string): Promise<ConstituencyHistory> {
+  const authHeader = await getBackendAuthHeader();
+  return fetchConstituencyHistory(pcName, authHeader);
+}
+
+export async function searchConstituencyNames(q: string): Promise<string[]> {
+  const authHeader = await getBackendAuthHeader();
+  return searchConstituencies(q, authHeader);
 }

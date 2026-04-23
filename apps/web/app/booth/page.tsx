@@ -8,9 +8,5 @@ export default async function BoothPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q } = await searchParams;
-  return (
-    <main className="min-h-screen">
-      <BoothClient initialQuery={q} />
-    </main>
-  );
+  return <BoothClient initialQuery={q} />;
 }

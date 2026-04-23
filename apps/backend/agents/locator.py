@@ -29,6 +29,18 @@ class LocatorAgent:
         self._model = GenerativeModel(settings.vertex_model)
 
     async def run(self, message: str) -> dict:
+        """Extract a location from the user message and look up polling booths.
+
+        Uses Gemini to extract a location string, then fuzzy-matches it against
+        the Firestore constituencies collection.
+
+        Args:
+            message: User message in English, expected to contain a location.
+
+        Returns:
+            Dict with keys: response (str), citations ([]), agent ("locator"),
+            and optionally booth_query (str constituency ID for map rendering).
+        """
         cr = self._model.generate_content(
             contents=f"{_EXTRACT_PROMPT}\n\nUser: {message}",
             generation_config=GenerationConfig(

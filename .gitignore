@@ -46,8 +46,9 @@ build/
 Thumbs.db
 desktop.ini
 
-# IDE (but not .vscode/extensions.json etc — narrow as needed)
+# IDE
 .idea/
+.vscode/
 *.swp
 *.swo
 
@@ -63,6 +64,10 @@ service-account-*.json
 # ECI source PDFs (large; document sources in data/eci-docs/SOURCES.md)
 data/eci-docs/*.pdf
 data/eci-docs/*.PDF
+
+# Election data CSVs and transformation scripts (local only)
+data/elections/
+scripts/normalize_2024.py
 
 # Eval reports (generated)
 eval/reports/

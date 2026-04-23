@@ -36,6 +36,18 @@ class JourneyAgent:
         self._model = GenerativeModel(settings.vertex_model, system_instruction=_SYSTEM)
 
     async def run(self, session_id: str, message: str) -> dict:
+        """Advance the voter onboarding checklist by one step.
+
+        Reads completed_steps from Firestore, determines the current step,
+        generates a contextual response, and marks the step complete.
+
+        Args:
+            session_id: Anonymous session UUID.
+            message: User response to the current step prompt.
+
+        Returns:
+            Dict with keys: response (str), citations ([]), agent ("journey").
+        """
         session = await get_session(session_id)
         completed: list[str] = session.get("completed_steps", [])
         pending = [s for s in _STEPS if s not in completed]

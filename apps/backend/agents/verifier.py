@@ -33,6 +33,15 @@ class VerifierAgent:
         )
 
     async def run(self, message: str) -> dict:
+        """Fact-check a claim against ECI documents and return a structured verdict.
+
+        Args:
+            message: The claim to verify, in English.
+
+        Returns:
+            Dict with keys: response (str with VERDICT/REASONING), citations (list),
+            agent ("verifier"), verdict (one of TRUE/FALSE/PARTIALLY_TRUE/UNVERIFIABLE).
+        """
         response = self._model.generate_content(
             contents=f"Verify this claim: {message}",
             tools=[self._tool],

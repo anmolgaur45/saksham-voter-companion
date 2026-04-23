@@ -1,0 +1,214 @@
+[
+  {
+    "id": "electoral-roll-revision",
+    "title": "Electoral Roll Revision",
+    "short_description": "The Election Commission updates voter rolls to add new voters, correct entries, and remove ineligible names.",
+    "duration": "Several months (typically Oct–Jan before election year)",
+    "what_happens": "Electoral Registration Officers publish draft electoral rolls for public inspection. Citizens can apply for inclusion, deletion, or correction using prescribed forms. The final rolls are published and frozen before the election is announced.",
+    "what_citizens_can_do": [
+      "Check your name at electoralsearch.eci.gov.in",
+      "File Form 6 to register as a new voter",
+      "File Form 8 to correct your name, address, or photo",
+      "File Form 7 to report a deceased or shifted voter for deletion"
+    ],
+    "what_is_restricted": [],
+    "icon_name": "Users",
+    "source_citation": "Form_6_English, Form_7_English, Form_8_English (ECI)"
+  },
+  {
+    "id": "election-announcement",
+    "title": "Election Announcement",
+    "short_description": "The Election Commission issues the official election schedule, triggering the formal start of the process.",
+    "duration": "1 day",
+    "what_happens": "The ECI holds a press conference announcing polling dates, the number of phases, and the full election calendar. This announcement simultaneously activates the Model Code of Conduct across all states going to polls. The schedule is published in the Official Gazette.",
+    "what_citizens_can_do": [
+      "Note your constituency's polling date from the official ECI schedule",
+      "Verify your name is on the final electoral roll",
+      "Share accurate schedule information with first-time voters"
+    ],
+    "what_is_restricted": [
+      "Government announcements of new welfare schemes or projects that could influence voters",
+      "Use of government machinery for election campaign purposes"
+    ],
+    "icon_name": "Megaphone",
+    "source_citation": "Manual on Model Code of Conduct (ECI)"
+  },
+  {
+    "id": "model-code-of-conduct",
+    "title": "Model Code of Conduct",
+    "short_description": "ECI guidelines governing the conduct of political parties, candidates, and governments from announcement until results.",
+    "duration": "From announcement until results are declared",
+    "what_happens": "The MCC immediately restricts the ruling government from announcing new schemes, making discretionary transfers of officials, or using state resources for campaign purposes. All political parties and candidates must maintain fair conduct standards during this period.",
+    "what_citizens_can_do": [
+      "Report MCC violations via the cVIGIL mobile app — complaints are addressed within 100 minutes",
+      "Check ECI's grievance portal for status of filed complaints"
+    ],
+    "what_is_restricted": [
+      "New government schemes, projects, or benefits announced for electoral gain",
+      "Transfer or posting of government officials without ECI approval",
+      "Use of government vehicles, buildings, or staff for campaign activities"
+    ],
+    "icon_name": "Shield",
+    "source_citation": "Manual on Model Code of Conduct (ECI)"
+  },
+  {
+    "id": "notification-of-election",
+    "title": "Notification of Election",
+    "short_description": "The official gazette notification formally initiates the election for a constituency and opens the nomination window.",
+    "duration": "1 day",
+    "what_happens": "The Returning Officer issues a gazette notification under Section 30 of the Representation of the People Act, 1951. This notification specifies the last date for nominations, the date of scrutiny, the last date for withdrawal, and the polling date. The nomination window opens on this date.",
+    "what_citizens_can_do": [
+      "Read the notification to confirm your constituency's key election dates",
+      "Contact the Returning Officer's office if you intend to contest as an independent candidate"
+    ],
+    "what_is_restricted": [],
+    "icon_name": "FileText",
+    "source_citation": null
+  },
+  {
+    "id": "nomination-filing",
+    "title": "Nomination Filing",
+    "short_description": "Candidates file their nomination papers with the Returning Officer to formally enter the election.",
+    "duration": "Minimum 7 days",
+    "what_happens": "Prospective candidates submit nomination papers to the Returning Officer along with a security deposit and required documents. A candidate may file up to 4 sets of nomination papers. The Returning Officer issues a receipt for each valid filing.",
+    "what_citizens_can_do": [
+      "Review the list of candidates who have filed nominations at the Returning Officer's office",
+      "Check candidate affidavits disclosing criminal history, assets, and liabilities on the ECI website"
+    ],
+    "what_is_restricted": [
+      "Filing nominations without the prescribed security deposit"
+    ],
+    "icon_name": "FilePlus",
+    "source_citation": null
+  },
+  {
+    "id": "scrutiny-of-nominations",
+    "title": "Scrutiny of Nominations",
+    "short_description": "The Returning Officer examines all nomination papers for legal validity on the day after the last date of filing.",
+    "duration": "1 day",
+    "what_happens": "The Returning Officer scrutinises each nomination paper for completeness and legal compliance. Candidates and their proposers may be present. Nominations with substantive defects are rejected; minor technical defects may be permitted to be corrected on the spot.",
+    "what_citizens_can_do": [
+      "Attend scrutiny proceedings, which are open to candidates and their agents",
+      "Review the list of validly nominated candidates published after scrutiny"
+    ],
+    "what_is_restricted": [],
+    "icon_name": "ClipboardCheck",
+    "source_citation": null
+  },
+  {
+    "id": "withdrawal-of-candidatures",
+    "title": "Withdrawal of Candidatures",
+    "short_description": "Candidates may withdraw from the election within two days of the scrutiny date.",
+    "duration": "2 days",
+    "what_happens": "Any validly nominated candidate may file a notice of withdrawal with the Returning Officer before 3:00 PM on the last date for withdrawal. After this window closes, the final list of contesting candidates is published and ballot positions are assigned.",
+    "what_citizens_can_do": [
+      "Check the final list of contesting candidates published after the withdrawal deadline closes"
+    ],
+    "what_is_restricted": [
+      "Withdrawal after the deadline — once the window closes, a candidate cannot be removed from the ballot"
+    ],
+    "icon_name": "UserMinus",
+    "source_citation": null
+  },
+  {
+    "id": "campaign-period",
+    "title": "Campaign Period",
+    "short_description": "Candidates and political parties campaign across constituencies to seek votes from the electorate.",
+    "duration": "Typically 2–3 weeks (ends 48 hours before polling)",
+    "what_happens": "Candidates hold public rallies, door-to-door campaigns, and media outreach. All campaign expenditure is monitored by ECI observers against the prescribed ceiling. Flying squads and video surveillance teams watch for cash distribution and MCC violations.",
+    "what_citizens_can_do": [
+      "Attend public rallies and question candidates on their agenda",
+      "Report cash or gift distribution via the cVIGIL app",
+      "Verify campaign claims against official ECI data and candidate affidavits"
+    ],
+    "what_is_restricted": [
+      "Appeals to voters based on religion, caste, or community",
+      "Distributing money, liquor, or gifts to influence voters",
+      "Putting up hoardings or banners without permission from local authorities"
+    ],
+    "icon_name": "Mic",
+    "source_citation": "Manual on Model Code of Conduct (ECI)"
+  },
+  {
+    "id": "campaign-silence",
+    "title": "Campaign Silence Period",
+    "short_description": "All public campaigning halts 48 hours before polling closes, giving voters time for undisturbed reflection.",
+    "duration": "48 hours",
+    "what_happens": "No public meetings, processions, or loud-speaker campaigns may be held. Electronic media may not broadcast election-related campaign content. The silence period is intended to prevent last-minute voter influence and allow voters to make an informed decision.",
+    "what_citizens_can_do": [
+      "Locate your polling booth using electoralsearch.eci.gov.in or this app",
+      "Confirm the documents required to vote and plan travel to the polling station",
+      "Review candidate information one last time before polling day"
+    ],
+    "what_is_restricted": [
+      "Public election meetings, rallies, or processions",
+      "Election advertising on electronic media including television and social media"
+    ],
+    "icon_name": "MicOff",
+    "source_citation": "Manual on Model Code of Conduct (ECI)"
+  },
+  {
+    "id": "polling-day",
+    "title": "Polling Day",
+    "short_description": "Registered voters cast their ballots at their designated polling station using an Electronic Voting Machine.",
+    "duration": "1 day (typically 7 AM to 6 PM)",
+    "what_happens": "Voters present their EPIC (Voter ID card) or an approved alternate photo ID to polling officers. Their identity is verified against the electoral roll, indelible ink is applied to the left forefinger, and they cast their vote on the Ballot Unit of the EVM. A VVPAT slip is displayed for 7 seconds so voters can verify their choice.",
+    "what_citizens_can_do": [
+      "Bring your Voter Photo Identity Card (EPIC) or an ECI-approved alternate photo ID",
+      "Report any intimidation, booth capture, or irregularity to the Presiding Officer or the 1950 helpline",
+      "Verify the indelible ink mark and your vote before leaving the booth"
+    ],
+    "what_is_restricted": [
+      "Campaigning within 100 metres of a polling station",
+      "Carrying mobile phones or weapons inside the polling booth",
+      "Impersonating another voter"
+    ],
+    "icon_name": "CheckSquare",
+    "source_citation": "EVM User Manual (ECI)"
+  },
+  {
+    "id": "counting-day",
+    "title": "Counting Day",
+    "short_description": "Votes recorded in EVMs are counted at designated counting centres under strict ECI supervision.",
+    "duration": "1 day",
+    "what_happens": "EVM Control Units are transported from strong rooms (secured under CCTV and multi-party seals since polling) to counting centres. Votes are counted in rounds by constituency, with results announced progressively. Candidates and their appointed counting agents may be present inside the counting hall.",
+    "what_citizens_can_do": [
+      "Follow live results on the ECI results portal at results.eci.gov.in",
+      "Candidates' agents can request a recount if the margin of victory is very narrow"
+    ],
+    "what_is_restricted": [
+      "Unauthorised persons inside the counting hall",
+      "Mobile phones for counting agents inside the counting hall"
+    ],
+    "icon_name": "BarChart2",
+    "source_citation": "EVM User Manual (ECI)"
+  },
+  {
+    "id": "declaration-of-results",
+    "title": "Declaration of Results",
+    "short_description": "The Returning Officer officially declares the winning candidate after all counting and any recounts are complete.",
+    "duration": "Same day as counting",
+    "what_happens": "Once counting is finalised, the Returning Officer declares the result and issues a certificate of election to the winning candidate under Form 20. Results are simultaneously updated on the ECI results portal. Candidates who lose their security deposit (less than 1/6 of votes polled) are also notified.",
+    "what_citizens_can_do": [
+      "Check official results at results.eci.gov.in",
+      "File an election petition in the relevant High Court within 45 days if there is evidence of corrupt practices"
+    ],
+    "what_is_restricted": [],
+    "icon_name": "Award",
+    "source_citation": null
+  },
+  {
+    "id": "mcc-withdrawal",
+    "title": "MCC Withdrawal",
+    "short_description": "The Election Commission formally withdraws the Model Code of Conduct after results are declared for all phases.",
+    "duration": "1 day",
+    "what_happens": "Once results for all constituencies are declared, the ECI issues a formal notification withdrawing the Model Code of Conduct. The incumbent or incoming government is then free to resume normal policy announcements, administrative transfers, and public schemes.",
+    "what_citizens_can_do": [
+      "Hold your elected representative accountable to their campaign commitments",
+      "Engage with your constituency's grievance redressal mechanisms"
+    ],
+    "what_is_restricted": [],
+    "icon_name": "ShieldOff",
+    "source_citation": "Manual on Model Code of Conduct (ECI)"
+  }
+]

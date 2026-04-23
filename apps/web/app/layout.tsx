@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Sans_Devanagari } from "next/font/google";
+import { AppShell } from "@/components/AppShell";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const ibmPlexDevanagari = IBM_Plex_Sans_Devanagari({
+  weight: ["400", "500", "600"],
+  subsets: ["devanagari"],
+  variable: "--font-ibm-devanagari",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Saksham — Indian Voter Assistant",
+  title: "Saksham — Indian Voter Education",
   description:
-    "A multilingual, multi-agent assistant that educates Indian voters on the election process, grounded in ECI sources.",
+    "Understand Indian elections in your language. Grounded in Election Commission of India sources.",
 };
 
 export default function RootLayout({
@@ -26,9 +30,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${ibmPlexDevanagari.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
