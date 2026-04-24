@@ -2,17 +2,17 @@ flowchart TD
     User(["User\n(browser)"])
 
     subgraph CR_Web["Cloud Run — saksham-web"]
-        Next["Next.js 15\nApp Router"]
+        Next["Next.js 15\nApp Router\nChat · Timeline · Booth · Constituency · Verify"]
     end
 
     subgraph CR_Back["Cloud Run — saksham-backend"]
-        Orch["Orchestrator Agent\n(intent classifier)"]
+        Orch["Orchestrator Agent\n(intent classification · Gemini 2.5 Flash)"]
 
         subgraph Agents["Specialist Agents"]
-            KA["Knowledge Agent"]
-            LA["Locator Agent"]
-            JA["Journey Agent"]
-            VA["Verifier Agent"]
+            KA["Knowledge Agent\n(grounded Q&A + citations)"]
+            LA["Locator Agent\n(booth lookup + map)"]
+            JA["Journey Agent\n(first-time voter flow)"]
+            VA["Verifier Agent\n(claim fact-checking)"]
         end
 
         Orch --> KA
@@ -21,18 +21,21 @@ flowchart TD
         Orch --> VA
     end
 
-    subgraph GCP["Google Cloud"]
+    subgraph GCP["Google Cloud Services"]
         VAI["Vertex AI\nGemini 2.5 Flash"]
         VAS["Vertex AI Search\n(ECI documents)"]
-        Maps["Maps Platform"]
-        FS["Firestore"]
-        TR["Cloud Translation"]
-        TTS["Cloud Text-to-Speech"]
-        LOG["Cloud Logging"]
+        Maps["Maps Platform\n(Places · Directions)"]
+        FS["Firestore\n(session state · constituency data)"]
+        BQ["BigQuery\n(election history 2004–2024)"]
+        TR["Cloud Translation\n(EN / HI / TA / BN)"]
+        TTS["Cloud Text-to-Speech\n(Hindi · Neural2)"]
+        LOG["Cloud Logging\n(structured JSON)"]
+        SM["Secret Manager\n(credentials)"]
+        ADK["Google ADK\n(agent framework)"]
     end
 
     User -->|"HTTPS"| Next
-    Next -->|"Server Action\n(ID token auth)"| Orch
+    Next -->|"Server Actions\nID token auth"| Orch
 
     KA --> VAI
     KA --> VAS
@@ -47,4 +50,6 @@ flowchart TD
 
     Next --> TR
     Next --> TTS
+    Next --> BQ
     CR_Back --> LOG
+    CR_Back --> SM

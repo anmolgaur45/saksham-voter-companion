@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 760" width="900" height="760"
+     font-family="'Segoe UI', system-ui, -apple-system, Arial, sans-serif">
+
+  <defs>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arr" markerWidth="12" markerHeight="9" refX="11" refY="4.5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0,12 4.5,0 9" fill="#5F6368"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="760" fill="#FFFFFF"/>
+
+  <!-- ════ BROWSER ════════════════════════════════════════════════ -->
+  <rect x="300" y="28" width="300" height="56" rx="8"
+        fill="#E8EAED" stroke="#BDC1C6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="51" text-anchor="middle" font-size="14" font-weight="600" fill="#202124">Browser</text>
+  <text x="450" y="70" text-anchor="middle" font-size="11" fill="#5F6368">User (web app)</text>
+
+  <!-- arrow: Browser → Web -->
+  <line x1="450" y1="84" x2="450" y2="121" stroke="#5F6368" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="460" y="107" font-size="10" fill="#5F6368">HTTPS</text>
+
+  <!-- ════ CLOUD RUN — saksham-web ════════════════════════════════ -->
+  <rect x="100" y="124" width="700" height="75" rx="8"
+        fill="#E3F2FD" stroke="#90CAF9" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="148" text-anchor="middle" font-size="13" font-weight="600" fill="#1565C0">Cloud Run — saksham-web</text>
+  <text x="450" y="166" text-anchor="middle" font-size="11" fill="#1976D2">Next.js 15 · App Router</text>
+  <text x="450" y="184" text-anchor="middle" font-size="10" fill="#5F6368">Chat · Timeline · Booth · Constituency · Verify</text>
+
+  <!-- arrow: Web → Backend -->
+  <line x1="450" y1="199" x2="450" y2="246" stroke="#5F6368" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="456" y="227" font-size="10" fill="#5F6368">Server Actions · ID token auth</text>
+
+  <!-- ════ CLOUD RUN — saksham-backend ════════════════════════════ -->
+  <rect x="60" y="249" width="780" height="252" rx="8"
+        fill="#E6F4EA" stroke="#A8D5B5" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="272" text-anchor="middle" font-size="13" font-weight="600" fill="#1B5E20">Cloud Run — saksham-backend</text>
+  <text x="450" y="289" text-anchor="middle" font-size="11" fill="#2E7D32">FastAPI · Python 3.12</text>
+
+  <!-- Orchestrator -->
+  <rect x="275" y="303" width="350" height="52" rx="6"
+        fill="#C8E6C9" stroke="#81C784" stroke-width="1.5"/>
+  <text x="450" y="325" text-anchor="middle" font-size="12" font-weight="600" fill="#1B5E20">Orchestrator Agent</text>
+  <text x="450" y="342" text-anchor="middle" font-size="10" fill="#33691E">intent classification · Gemini 2.5 Flash</text>
+
+  <!-- tree: Orchestrator → Agents -->
+  <line x1="450" y1="355" x2="450" y2="375" stroke="#5F6368" stroke-width="1.2"/>
+  <line x1="173" y1="375" x2="728" y2="375" stroke="#5F6368" stroke-width="1.2"/>
+  <line x1="173" y1="375" x2="173" y2="395" stroke="#5F6368" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="358" y1="375" x2="358" y2="395" stroke="#5F6368" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="543" y1="375" x2="543" y2="395" stroke="#5F6368" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="728" y1="375" x2="728" y2="395" stroke="#5F6368" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Knowledge Agent (x=88, w=170, cx=173) -->
+  <rect x="88" y="395" width="170" height="65" rx="6"
+        fill="#F3E5F5" stroke="#CE93D8" stroke-width="1.5"/>
+  <text x="173" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#4A148C">Knowledge Agent</text>
+  <text x="173" y="431" text-anchor="middle" font-size="9" fill="#6A1B9A">Vertex AI Search</text>
+  <text x="173" y="445" text-anchor="middle" font-size="9" fill="#6A1B9A">grounded Q&amp;A + citations</text>
+
+  <!-- Locator Agent (x=273, w=170, cx=358) -->
+  <rect x="273" y="395" width="170" height="65" rx="6"
+        fill="#F3E5F5" stroke="#CE93D8" stroke-width="1.5"/>
+  <text x="358" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#4A148C">Locator Agent</text>
+  <text x="358" y="431" text-anchor="middle" font-size="9" fill="#6A1B9A">Maps · Firestore</text>
+  <text x="358" y="445" text-anchor="middle" font-size="9" fill="#6A1B9A">booth lookup + map</text>
+
+  <!-- Journey Agent (x=458, w=170, cx=543) -->
+  <rect x="458" y="395" width="170" height="65" rx="6"
+        fill="#F3E5F5" stroke="#CE93D8" stroke-width="1.5"/>
+  <text x="543" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#4A148C">Journey Agent</text>
+  <text x="543" y="431" text-anchor="middle" font-size="9" fill="#6A1B9A">Firestore session state</text>
+  <text x="543" y="445" text-anchor="middle" font-size="9" fill="#6A1B9A">first-time voter flow</text>
+
+  <!-- Verifier Agent (x=643, w=170, cx=728) -->
+  <rect x="643" y="395" width="170" height="65" rx="6"
+        fill="#F3E5F5" stroke="#CE93D8" stroke-width="1.5"/>
+  <text x="728" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#4A148C">Verifier Agent</text>
+  <text x="728" y="431" text-anchor="middle" font-size="9" fill="#6A1B9A">Vertex AI Search</text>
+  <text x="728" y="445" text-anchor="middle" font-size="9" fill="#6A1B9A">claim fact-checking</text>
+
+  <!-- arrow: Backend → GCP -->
+  <line x1="450" y1="501" x2="450" y2="526" stroke="#5F6368" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="456" y="517" font-size="10" fill="#5F6368">Google Cloud APIs</text>
+
+  <!-- ════ GOOGLE CLOUD SERVICES ═══════════════════════════════════ -->
+  <rect x="40" y="529" width="820" height="212" rx="8"
+        fill="#FEF9E7" stroke="#F9D49B" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="551" text-anchor="middle" font-size="13" font-weight="600" fill="#7F6000">Google Cloud Services</text>
+
+  <!-- Row 1 (y=562, h=62) -->
+  <rect x="60"  y="562" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="133" y="582" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Vertex AI</text>
+  <text x="133" y="596" text-anchor="middle" font-size="9"  fill="#7F6000">Gemini 2.5 Flash</text>
+  <text x="133" y="610" text-anchor="middle" font-size="9"  fill="#7F6000">LLM for all agents</text>
+
+  <rect x="218" y="562" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="291" y="582" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Vertex AI Search</text>
+  <text x="291" y="596" text-anchor="middle" font-size="9"  fill="#7F6000">ECI documents</text>
+  <text x="291" y="610" text-anchor="middle" font-size="9"  fill="#7F6000">grounded RAG</text>
+
+  <rect x="376" y="562" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="449" y="582" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Maps Platform</text>
+  <text x="449" y="596" text-anchor="middle" font-size="9"  fill="#7F6000">Places · Directions</text>
+  <text x="449" y="610" text-anchor="middle" font-size="9"  fill="#7F6000">booth map rendering</text>
+
+  <rect x="534" y="562" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="607" y="582" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Firestore</text>
+  <text x="607" y="596" text-anchor="middle" font-size="9"  fill="#7F6000">session state</text>
+  <text x="607" y="610" text-anchor="middle" font-size="9"  fill="#7F6000">constituency data</text>
+
+  <rect x="692" y="562" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="765" y="582" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">BigQuery</text>
+  <text x="765" y="596" text-anchor="middle" font-size="9"  fill="#7F6000">election history</text>
+  <text x="765" y="610" text-anchor="middle" font-size="9"  fill="#7F6000">2004&#8211;2024 results</text>
+
+  <!-- Row 2 (y=636, h=62) -->
+  <rect x="60"  y="636" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="133" y="656" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Cloud Translation</text>
+  <text x="133" y="670" text-anchor="middle" font-size="9"  fill="#7F6000">EN / HI / TA / BN</text>
+  <text x="133" y="684" text-anchor="middle" font-size="9"  fill="#7F6000">input + response</text>
+
+  <rect x="218" y="636" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="291" y="656" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Cloud Text-to-Speech</text>
+  <text x="291" y="670" text-anchor="middle" font-size="9"  fill="#7F6000">Hindi audio</text>
+  <text x="291" y="684" text-anchor="middle" font-size="9"  fill="#7F6000">Neural2 voice</text>
+
+  <rect x="376" y="636" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="449" y="656" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Cloud Logging</text>
+  <text x="449" y="670" text-anchor="middle" font-size="9"  fill="#7F6000">structured JSON</text>
+  <text x="449" y="684" text-anchor="middle" font-size="9"  fill="#7F6000">request tracing</text>
+
+  <rect x="534" y="636" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="607" y="656" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Secret Manager</text>
+  <text x="607" y="670" text-anchor="middle" font-size="9"  fill="#7F6000">API keys</text>
+  <text x="607" y="684" text-anchor="middle" font-size="9"  fill="#7F6000">credentials</text>
+
+  <rect x="692" y="636" width="146" height="62" rx="5" fill="#FFFDE7" stroke="#F9D49B" stroke-width="1"/>
+  <text x="765" y="656" text-anchor="middle" font-size="11" font-weight="600" fill="#5F4000">Google ADK</text>
+  <text x="765" y="670" text-anchor="middle" font-size="9"  fill="#7F6000">agent framework</text>
+  <text x="765" y="684" text-anchor="middle" font-size="9"  fill="#7F6000">orchestration</text>
+
+</svg>
