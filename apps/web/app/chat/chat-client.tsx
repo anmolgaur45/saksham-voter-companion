@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +36,12 @@ export default function ChatClient() {
   const [loading, setLoading] = useState(false);
   const { language } = useLanguage();
   const sessionId = useRef(crypto.randomUUID());
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) setInput(q);
+  }, [searchParams]);
   const t = useI18n({
     emptyState: "Ask me anything about Indian elections.",
     placeholder: "Ask about voter registration, polling booths…",

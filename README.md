@@ -1,6 +1,23 @@
 # Saksham
 
-Voter education assistant for India. Answers questions about the election process, finds polling booths, verifies claims against ECI sources, and shows constituency-level election history. Supports English, Hindi, Tamil, and Bengali.
+Voter education tool for India. Answers questions about the election process, finds polling booths, verifies claims against ECI sources, shows constituency election history, walks through polling day step by step, and tests voter knowledge with a 15-question quiz. Supports English, Hindi, Tamil, and Bengali.
+
+A non-partisan civic project. All answers sourced from the Election Commission of India.
+
+---
+
+<table>
+<tr>
+  <td><img src="docs/screenshots/dashboard.png" width="680" alt="Dashboard"></td>
+  <td><img src="docs/screenshots/timeline.png" width="680" alt="Timeline"></td>
+</tr>
+<tr>
+  <td><img src="docs/screenshots/simulator.png" width="680" alt="Practice Simulator"></td>
+  <td><img src="docs/screenshots/quiz-result.png" width="680" alt="Quiz result"></td>
+</tr>
+</table>
+
+---
 
 ## Architecture
 
@@ -10,22 +27,27 @@ Voter education assistant for India. Answers questions about the election proces
 
 Each message is classified by an Orchestrator and routed to one of four agents:
 
-- **Knowledge Agent** answers process questions using Vertex AI Search over ECI PDFs. Every response includes a citation.
-- **Locator Agent** extracts a constituency or city, looks up booth data from Firestore, and renders a Google Maps view.
-- **Journey Agent** runs a stateful onboarding flow for first-time voters. Progress is tracked in Firestore per session.
+- **Knowledge Agent** answers process questions using Vertex AI Search over ECI PDFs. Every response includes a citation. Falls back to Gemini if the search index returns no results.
+- **Locator Agent** extracts a constituency or city name, looks up booth data from Firestore, and renders a Google Maps view.
+- **Journey Agent** runs a stateful five-step onboarding flow for voters. Progress is tracked in Firestore per session.
 - **Verifier Agent** checks a forwarded claim against ECI documents and returns a verdict: TRUE, FALSE, PARTIALLY_TRUE, or UNVERIFIABLE.
 
 Non-English input is translated to English before routing. Responses are translated back to the user's selected language before being returned.
+
+The Practice Simulator and Quiz are front-end only and do not call the backend.
 
 ## Pages
 
 | Page | Path | What it does |
 |---|---|---|
+| Dashboard | `/` | Countdown, readiness checklist, constituency snapshot |
 | Chat | `/chat` | Main Q&A interface, all four agents |
 | Timeline | `/timeline` | Election calendar with phase and date breakdowns |
 | Booth | `/booth` | Polling booth locator with map |
-| Constituency | `/constituency` | Lok Sabha results by constituency, 2004 to 2024 |
+| Constituency | `/constituency` | Lok Sabha results by constituency, 2004 to 2019 |
 | Verify | `/verify` | Claim checker against ECI documents |
+| Practice | `/practice` | Step-by-step simulation of polling day |
+| Quiz | `/quiz` | 15-question test on the Indian election process |
 
 ## Google Cloud services
 
@@ -39,7 +61,7 @@ Non-English input is translated to English before routing. Responses are transla
 | Cloud Translation | Input and response translation (EN / HI / TA / BN) |
 | Cloud Text-to-Speech | Hindi audio playback, Neural2 voice |
 | Firestore | Session state and constituency seed data |
-| BigQuery | Lok Sabha election results, 2004 to 2024 |
+| BigQuery | Lok Sabha election results, 2004 to 2019 |
 | Secret Manager | Credentials in production |
 | Cloud Logging | Structured JSON logs with request_id and latency |
 
@@ -80,7 +102,7 @@ Runs 30 Q&A pairs through the Knowledge Agent. Gemini scores each response on re
 
 ECI documents indexed in Vertex AI Search: `data/eci-docs/SOURCES.md`
 
-Election results (BigQuery): sourced from the Election Commission of India. Covers all Lok Sabha general elections from 2004 to 2024 across 543 constituencies.
+Election results (BigQuery): sourced from the Election Commission of India. Covers Lok Sabha general elections from 2004, 2009, 2014, and 2019 across 543 constituencies. 2024 data is not included.
 
 ## License
 

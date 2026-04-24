@@ -1,0 +1,157 @@
+[
+  {
+    "id": 1,
+    "category": "eligibility",
+    "question": "What is the minimum age to vote in Indian general elections?",
+    "options": ["16 years", "18 years", "21 years", "25 years"],
+    "correct": 1,
+    "explanation": "Article 326 of the Constitution grants the right to vote to every citizen aged 18 and above."
+  },
+  {
+    "id": 2,
+    "category": "eligibility",
+    "question": "What is the minimum age to contest a Lok Sabha election?",
+    "options": ["18 years", "21 years", "25 years", "30 years"],
+    "correct": 2,
+    "explanation": "Article 84(b) of the Constitution requires a candidate for the Lok Sabha to be at least 25 years old."
+  },
+  {
+    "id": 3,
+    "category": "registration",
+    "question": "Which form is used to apply for inclusion of a name in the electoral roll?",
+    "options": ["Form 6", "Form 7", "Form 8", "Form 9"],
+    "correct": 0,
+    "explanation": "Form 6 is the ECI application for new voter registration — adding your name to the electoral roll for the first time."
+  },
+  {
+    "id": 4,
+    "category": "registration",
+    "question": "What is Form 7 used for?",
+    "options": [
+      "Correcting your details in the electoral roll",
+      "Applying for a new EPIC card",
+      "Objecting to the inclusion of a name in the electoral roll",
+      "Requesting a change of polling booth"
+    ],
+    "correct": 2,
+    "explanation": "Form 7 allows any registered voter to raise an objection to another person's inclusion in the electoral roll."
+  },
+  {
+    "id": 5,
+    "category": "registration",
+    "question": "Which article of the Indian Constitution establishes universal adult franchise?",
+    "options": ["Article 14", "Article 19", "Article 326", "Article 368"],
+    "correct": 2,
+    "explanation": "Article 326 provides that elections to the Lok Sabha and State Assemblies shall be on the basis of adult suffrage — every citizen 18+ has a vote."
+  },
+  {
+    "id": 6,
+    "category": "polling_day",
+    "question": "At what time do most polling booths open on election day?",
+    "options": ["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM"],
+    "correct": 1,
+    "explanation": "Polling generally runs from 7:00 AM to 6:00 PM. Voters already in the queue at closing time are entitled to cast their ballot."
+  },
+  {
+    "id": 7,
+    "category": "polling_day",
+    "question": "On which finger is indelible ink applied at Indian polling booths?",
+    "options": [
+      "Right index finger",
+      "Left thumb",
+      "Left index finger",
+      "Right thumb"
+    ],
+    "correct": 2,
+    "explanation": "Indelible ink is applied to the nail and skin of the left index finger to prevent a voter from casting a second ballot."
+  },
+  {
+    "id": 8,
+    "category": "polling_day",
+    "question": "For approximately how long does indelible ink remain visible on skin?",
+    "options": ["24–48 hours", "3–5 days", "1–2 weeks", "4–6 weeks"],
+    "correct": 3,
+    "explanation": "The ink used in Indian elections contains silver nitrate and remains visible for 4–6 weeks — making it impossible to wash off between polling phases."
+  },
+  {
+    "id": 9,
+    "category": "polling_day",
+    "question": "What does EPIC stand for?",
+    "options": [
+      "Election Photo Identification Certificate",
+      "Electors Photo Identity Card",
+      "Electoral Process Identification Code",
+      "Election Process Identity Certificate"
+    ],
+    "correct": 1,
+    "explanation": "EPIC — Electors Photo Identity Card — is the voter ID card issued by the Election Commission of India."
+  },
+  {
+    "id": 10,
+    "category": "evm",
+    "question": "What does NOTA stand for on the Electronic Voting Machine?",
+    "options": [
+      "No Other Trusted Alternative",
+      "Neutral Option To Abstain",
+      "None of the Above",
+      "No Official Ticket Accepted"
+    ],
+    "correct": 2,
+    "explanation": "NOTA — None of the Above — was introduced in 2013 following a Supreme Court order, allowing voters to reject all candidates on the ballot."
+  },
+  {
+    "id": 11,
+    "category": "evm",
+    "question": "What does VVPAT stand for?",
+    "options": [
+      "Verified Voting Paper Audit Trail",
+      "Voter Verified Paper Audit Trail",
+      "Voter Validated Poll Audit Track",
+      "Verified Vote Paper Audit Track"
+    ],
+    "correct": 1,
+    "explanation": "VVPAT — Voter Verified Paper Audit Trail — prints a paper slip showing the voter's choice, visible for 7 seconds through a glass panel, then deposited into a sealed box."
+  },
+  {
+    "id": 12,
+    "category": "evm",
+    "question": "For how many seconds is the VVPAT slip visible to the voter?",
+    "options": ["3 seconds", "5 seconds", "7 seconds", "10 seconds"],
+    "correct": 2,
+    "explanation": "The VVPAT slip is displayed for 7 seconds behind a glass window so the voter can verify their choice before it is automatically dropped into a sealed container."
+  },
+  {
+    "id": 13,
+    "category": "mcc",
+    "question": "When does the Model Code of Conduct (MCC) come into force?",
+    "options": [
+      "30 days before polling day",
+      "On the day nominations open",
+      "From the date the election schedule is announced",
+      "Once candidates file their nominations"
+    ],
+    "correct": 2,
+    "explanation": "The MCC comes into effect immediately when the Election Commission announces the election schedule, and remains until the counting process is complete."
+  },
+  {
+    "id": 14,
+    "category": "counting",
+    "question": "Which body is constitutionally responsible for conducting Lok Sabha elections?",
+    "options": [
+      "Ministry of Home Affairs",
+      "Supreme Court of India",
+      "Parliament of India",
+      "Election Commission of India"
+    ],
+    "correct": 3,
+    "explanation": "Article 324 of the Constitution vests superintendence, direction, and control of all elections in the Election Commission of India."
+  },
+  {
+    "id": 15,
+    "category": "counting",
+    "question": "How many Lok Sabha constituencies does India have?",
+    "options": ["523", "530", "543", "550"],
+    "correct": 2,
+    "explanation": "The Lok Sabha has 543 directly elected seats representing constituencies across all states and union territories."
+  }
+]

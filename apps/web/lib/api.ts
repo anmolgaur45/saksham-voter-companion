@@ -144,13 +144,17 @@ export async function searchConstituencies(
   authHeader?: string
 ): Promise<string[]> {
   if (!q.trim()) return [];
-  const res = await backendFetch(
-    `/api/constituency/search?q=${encodeURIComponent(q)}`,
-    { method: "GET" },
-    authHeader
-  );
-  if (!res.ok) return [];
-  return res.json() as Promise<string[]>;
+  try {
+    const res = await backendFetch(
+      `/api/constituency/search?q=${encodeURIComponent(q)}`,
+      { method: "GET" },
+      authHeader
+    );
+    if (!res.ok) return [];
+    return res.json() as Promise<string[]>;
+  } catch {
+    return [];
+  }
 }
 
 export async function fetchConstituencyHistory(

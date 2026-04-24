@@ -33,7 +33,7 @@ export default function VerifyClient() {
     description:
       "Paste a claim about the Indian election process to check it against ECI sources.",
     disclaimer:
-      "Procedural Facts Only — this tool does not verify claims about candidates, parties, or election outcomes.",
+      "Procedural Facts Only. This tool does not verify claims about candidates, parties, or election outcomes.",
     placeholder: "e.g. EVMs can be hacked remotely during counting.",
     buttonVerify: "Verify claim",
     buttonChecking: "Checking…",
@@ -81,7 +81,7 @@ export default function VerifyClient() {
       </div>
 
       <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
-        <strong>Procedural Facts Only</strong> — {t.disclaimer.replace("Procedural Facts Only — ", "")}
+        <strong>Procedural Facts Only.</strong>{" "}{t.disclaimer.replace("Procedural Facts Only. ", "")}
       </div>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>

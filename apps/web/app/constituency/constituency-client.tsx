@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -172,14 +172,14 @@ function ResultsView({ data }: { data: ConstituencyHistory }) {
   );
 }
 
-export function ConstituencyClient() {
+export function ConstituencyClient({ initialQuery }: { initialQuery?: string }) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [data, setData] = useState<ConstituencyHistory | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isSearching, startSearch] = useTransition();
-  const [isLoading, startLoad] = useTransition();
+  const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -192,6 +192,36 @@ export function ConstituencyClient() {
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  function selectConstituency(name: string) {
+    setQuery(name);
+    setShowSuggestions(false);
+    setSuggestions([]);
+    setError(null);
+    setData(null);
+    setIsLoading(true);
+    getConstituencyHistory(name)
+      .then((result) => { setData(result); })
+      .catch((e) => { setError(e instanceof Error ? e.message : "Something went wrong."); })
+      .finally(() => { setIsLoading(false); });
+  }
+
+  // Auto-load from prop passed by the server component (avoids useSearchParams entirely)
+  useEffect(() => {
+    if (!initialQuery) return;
+    setQuery(initialQuery);
+    let cancelled = false;
+    (async () => {
+      try {
+        const result = await getConstituencyHistory(initialQuery);
+        if (!cancelled) setData(result);
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Something went wrong.");
+      }
+    })();
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleInput(value: string) {
@@ -207,28 +237,18 @@ export function ConstituencyClient() {
     }
 
     debounceRef.current = setTimeout(() => {
-      startSearch(async () => {
-        const results = await searchConstituencyNames(value);
-        setSuggestions(results);
-        setShowSuggestions(results.length > 0);
-      });
+      setIsSearching(true);
+      searchConstituencyNames(value)
+        .then((results) => {
+          setSuggestions(results);
+          setShowSuggestions(results.length > 0);
+        })
+        .catch(() => {
+          setSuggestions([]);
+          setShowSuggestions(false);
+        })
+        .finally(() => { setIsSearching(false); });
     }, 250);
-  }
-
-  function selectConstituency(name: string) {
-    setQuery(name);
-    setShowSuggestions(false);
-    setSuggestions([]);
-    setError(null);
-    setData(null);
-    startLoad(async () => {
-      try {
-        const result = await getConstituencyHistory(name);
-        setData(result);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Something went wrong.");
-      }
-    });
   }
 
   return (
@@ -258,7 +278,7 @@ export function ConstituencyClient() {
               value={query}
               onChange={(e) => handleInput(e.target.value)}
               onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-              placeholder="Type a city or constituency — e.g. Delhi, Bangalore, Varanasi"
+              placeholder="Type a city or constituency, e.g. Delhi, Bangalore, Varanasi"
               className="w-full pl-8 pr-8 py-2 text-sm border rounded bg-background focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>

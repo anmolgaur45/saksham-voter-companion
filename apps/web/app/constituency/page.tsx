@@ -1,5 +1,10 @@
 import { ConstituencyClient } from "./constituency-client";
 
-export default function ConstituencyPage() {
-  return <ConstituencyClient />;
+export default async function ConstituencyPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  return <ConstituencyClient initialQuery={q} />;
 }

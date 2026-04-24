@@ -94,7 +94,7 @@ export default function BoothClient({ initialQuery }: { initialQuery?: string })
                       selected?.id === booth.id ? "bg-primary/5 border-l-2 border-l-primary" : ""
                     }`}
                     onClick={() => setSelected(booth)}
-                    aria-label={`${booth.name} — ${booth.address}`}
+                    aria-label={`${booth.name} · ${booth.address}`}
                   >
                     <p className="text-xs font-medium leading-snug">
                       {i + 1}. {booth.name}
