@@ -26,7 +26,7 @@ steps:
       - --region=asia-south1
       - --no-allow-unauthenticated
       - --service-account=saksham-runtime@$PROJECT_ID.iam.gserviceaccount.com
-      - --set-env-vars=GCP_PROJECT_ID=$PROJECT_ID,GCP_REGION=asia-south1
+      - --set-env-vars=GCP_PROJECT_ID=$PROJECT_ID,GCP_REGION=asia-south1,VERTEX_LOCATION=us-central1,VERTEX_MODEL=gemini-2.5-flash,VERTEX_SEARCH_DATASTORE_ID=$_VERTEX_SEARCH_DATASTORE_ID,FIRESTORE_DATABASE=$_FIRESTORE_DATABASE
     waitFor: [push-backend]
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
@@ -48,6 +48,7 @@ steps:
       - build
       - -t
       - asia-south1-docker.pkg.dev/$PROJECT_ID/saksham/web:$COMMIT_SHA
+      - --build-arg=NEXT_PUBLIC_MAPS_API_KEY=$_MAPS_API_KEY
       - apps/web
     waitFor: [get-backend-url]
 
@@ -70,8 +71,13 @@ steps:
           --region=asia-south1 \
           --allow-unauthenticated \
           --service-account=saksham-runtime@$PROJECT_ID.iam.gserviceaccount.com \
-          --set-env-vars="GCP_PROJECT_ID=$PROJECT_ID,BACKEND_URL=${BACKEND_URL}"
+          --set-env-vars="GCP_PROJECT_ID=$PROJECT_ID,BACKEND_URL=$$BACKEND_URL"
     waitFor: [push-web]
+
+substitutions:
+  _MAPS_API_KEY: ""
+  _VERTEX_SEARCH_DATASTORE_ID: ""
+  _FIRESTORE_DATABASE: "saksham-voter-companion"
 
 images:
   - asia-south1-docker.pkg.dev/$PROJECT_ID/saksham/backend:$COMMIT_SHA

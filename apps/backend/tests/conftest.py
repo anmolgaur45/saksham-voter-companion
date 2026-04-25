@@ -1,6 +1,5 @@
 from unittest.mock import AsyncMock, MagicMock, patch
 
-import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 
@@ -28,18 +27,20 @@ async def client():
         patch("vertexai.init"),
         patch("agents.orchestrator.GenerativeModel", return_value=gm),
         patch("agents.knowledge.GenerativeModel", return_value=gm),
+        patch("agents.knowledge.build_search_tool", return_value=MagicMock()),
         patch("agents.locator.GenerativeModel", return_value=gm),
         patch("agents.verifier.GenerativeModel", return_value=gm),
+        patch("agents.verifier.build_search_tool", return_value=MagicMock()),
         patch("agents.journey.GenerativeModel", return_value=gm),
         patch("services.bigquery._get_client", return_value=bq),
-        patch("services.firestore.get_session", new_callable=AsyncMock, return_value={}),
+        patch("agents.orchestrator.get_session", new_callable=AsyncMock, return_value={}),
         patch(
-            "services.firestore.get_constituency_by_id",
+            "api.booth.get_constituency_by_id",
             new_callable=AsyncMock,
             return_value=None,
         ),
         patch(
-            "services.firestore.search_constituency",
+            "api.booth.search_constituency",
             new_callable=AsyncMock,
             return_value=None,
         ),
