@@ -66,7 +66,8 @@ data/eci-docs/*.pdf
 data/eci-docs/*.PDF
 
 # Election data CSVs and transformation scripts (local only)
-data/elections/
+data/elections/*
+!data/elections/SOURCES.md
 scripts/normalize_2024.py
 
 # Eval reports (generated)

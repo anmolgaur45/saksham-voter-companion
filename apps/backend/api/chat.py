@@ -16,13 +16,14 @@ def _get_orchestrator() -> OrchestratorAgent:
 
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., description="User message text")
-    session_id: str = Field(..., description="Anonymous session UUID from the browser")
+    message: str = Field(..., max_length=4000, description="User message text")
+    session_id: str = Field(..., max_length=200, description="Anonymous session UUID from the browser")
     language: str = Field(
-        "en", description="BCP-47 language code for input and output (en, hi, ta, bn)"
+        "en", max_length=10, description="BCP-47 language code for input and output (en, hi, ta, bn)"
     )
     agent_override: str | None = Field(
         None,
+        max_length=50,
         description="Force routing to a specific agent (knowledge, locator, verifier, journey)",
     )
 

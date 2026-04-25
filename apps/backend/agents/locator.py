@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 
-import vertexai
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
@@ -25,7 +24,6 @@ _NOT_FOUND = (
 
 class LocatorAgent:
     def __init__(self) -> None:
-        vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
         self._model = GenerativeModel(settings.vertex_model)
 
     async def run(self, message: str) -> dict:

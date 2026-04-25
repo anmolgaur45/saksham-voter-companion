@@ -38,7 +38,7 @@ class ConstituencyResponse(BaseModel):
     ),
 )
 async def booth(
-    q: str = Query(..., description="Constituency ID or partial name/city"),
+    q: str = Query(..., max_length=200, description="Constituency ID or partial name/city"),
 ) -> ConstituencyResponse:
     result = await get_constituency_by_id(q) or await search_constituency(q)
     if not result:

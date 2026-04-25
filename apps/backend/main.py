@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+import vertexai
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
@@ -17,6 +18,7 @@ from core.logging import RequestIdMiddleware, configure_logging
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     configure_logging(settings.log_level)
+    vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
     yield
 
 

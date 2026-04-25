@@ -68,8 +68,8 @@ def _to_response(pc_name: str, rows: list[bq_service.ElectionYear]) -> Constitue
     summary="Search constituency names",
     description="Returns constituency names containing the query string (case-insensitive). Cached after first call.",
 )
-async def search_constituencies(q: str = Query(default="", min_length=1)) -> list[str]:
-    return bq_service.search_constituencies(q)
+async def search_constituencies(q: str = Query(default="", min_length=1, max_length=200)) -> list[str]:
+    return await bq_service.search_constituencies(q)
 
 
 @router.get(
@@ -82,7 +82,7 @@ async def search_constituencies(q: str = Query(default="", min_length=1)) -> lis
     ),
 )
 async def get_history(pc_name: str) -> ConstituencyHistory:
-    results = bq_service.get_constituency_history(pc_name)
+    results = await bq_service.get_constituency_history(pc_name)
     if not results:
         raise HTTPException(
             status_code=404,

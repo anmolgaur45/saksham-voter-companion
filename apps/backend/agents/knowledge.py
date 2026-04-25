@@ -1,4 +1,3 @@
-import vertexai
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
@@ -25,7 +24,6 @@ Your answer is based on general knowledge, not official ECI documents. Advise th
 
 class KnowledgeAgent:
     def __init__(self) -> None:
-        vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
         self._model = GenerativeModel(
             model_name=settings.vertex_model,
             system_instruction=_SYSTEM,

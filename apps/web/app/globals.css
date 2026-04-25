@@ -15,7 +15,7 @@
   --text-primary:   #F5F7FA;
   --text-secondary: #A8B1C2;
   --text-tertiary:  #6B7489;
-  --text-muted:     #4A5168;
+  --text-muted:     #7A849A;
 
   /* Accent — saffron. CTAs, active nav, countdown, progress bar only. Nothing else. */
   --accent-primary: #FF671F;
@@ -155,6 +155,10 @@
     opacity: 0.4;
     cursor: not-allowed;
   }
+  .btn-cta:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
 
   /* Ghost secondary button */
   .btn-secondary {
@@ -170,6 +174,10 @@
     background-color: var(--bg-surface-2);
     color: var(--text-primary);
     border-color: var(--border-strong);
+  }
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
   }
 }
 

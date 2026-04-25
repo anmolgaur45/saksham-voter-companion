@@ -1,4 +1,5 @@
 import asyncio
+from typing import Annotated
 
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
@@ -9,8 +10,10 @@ router = APIRouter()
 
 
 class TranslateRequest(BaseModel):
-    texts: list[str] = Field(..., description="Strings to translate, returned in the same order")
-    lang: str = Field(..., description="BCP-47 target language code (hi, ta, bn)")
+    texts: list[Annotated[str, Field(max_length=5000)]] = Field(
+        ..., max_length=200, description="Strings to translate, returned in the same order"
+    )
+    lang: str = Field(..., max_length=10, description="BCP-47 target language code (hi, ta, bn)")
 
 
 class TranslateResponse(BaseModel):

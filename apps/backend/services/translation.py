@@ -32,7 +32,7 @@ async def translate_text(text: str, target_language: str) -> str:
         return text
     lang = _LANG_CODES.get(target_language, target_language)
     client = _get_client()
-    result = await asyncio.get_event_loop().run_in_executor(
+    result = await asyncio.get_running_loop().run_in_executor(
         None, lambda: client.translate(text, target_language=lang)
     )
     return html.unescape(result["translatedText"])
@@ -50,7 +50,7 @@ async def translate_to_english(text: str) -> str:
     if not text:
         return text
     client = _get_client()
-    result = await asyncio.get_event_loop().run_in_executor(
+    result = await asyncio.get_running_loop().run_in_executor(
         None, lambda: client.translate(text, target_language="en")
     )
     return html.unescape(result["translatedText"])

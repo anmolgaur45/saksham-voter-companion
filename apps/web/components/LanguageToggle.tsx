@@ -41,6 +41,7 @@ export function LanguageToggle({ onChange }: Props) {
   function select(code: string) {
     setActive(code);
     setLangCookie(code);
+    document.documentElement.lang = code;
     onChange(code);
   }
 

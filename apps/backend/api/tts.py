@@ -7,8 +7,8 @@ router = APIRouter()
 
 
 class TtsRequest(BaseModel):
-    text: str = Field(..., description="Text to synthesize; should be under ~5000 characters")
-    language: str = Field("hi", description="BCP-47 language code (hi, ta, bn)")
+    text: str = Field(..., max_length=5000, description="Text to synthesize")
+    language: str = Field("hi", max_length=10, description="BCP-47 language code (hi, ta, bn)")
 
 
 class TtsResponse(BaseModel):

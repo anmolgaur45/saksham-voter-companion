@@ -47,4 +47,4 @@ async def synthesize_speech(text: str, language: str = "hi") -> str:
         )
         return base64.b64encode(response.audio_content).decode("utf-8")
 
-    return await asyncio.get_event_loop().run_in_executor(None, _synthesize)
+    return await asyncio.get_running_loop().run_in_executor(None, _synthesize)

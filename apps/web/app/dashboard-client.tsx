@@ -225,6 +225,14 @@ function OnboardingModal({
   const [language, setLanguage] = useState("en");
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onDismiss();
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onDismiss]);
+
   const handleSearch = (q: string) => {
     setConstituency(q);
     setSuggestions([]);

@@ -5,7 +5,6 @@ import time
 from enum import StrEnum
 
 import structlog
-import vertexai
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from agents.journey import JourneyAgent
@@ -57,7 +56,6 @@ class Intent(StrEnum):
 
 class OrchestratorAgent:
     def __init__(self) -> None:
-        vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
         self._classifier = GenerativeModel(settings.vertex_model)
         self._knowledge = KnowledgeAgent()
         self._locator = LocatorAgent()

@@ -3,7 +3,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from services.translation import translate_text
@@ -107,7 +107,7 @@ async def _get_phases(lang: str) -> list[TimelinePhase]:
         "Translated results are cached in memory after the first request per language."
     ),
 )
-async def get_timeline(lang: str = "en") -> list[TimelinePhase]:
+async def get_timeline(lang: str = Query(default="en", max_length=10)) -> list[TimelinePhase]:
     return await _get_phases(lang)
 
 

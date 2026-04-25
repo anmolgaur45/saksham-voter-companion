@@ -1,3 +1,4 @@
+import asyncio
 from dataclasses import dataclass
 
 from google.cloud import bigquery
@@ -40,40 +41,40 @@ class ElectionYear:
 _constituency_names: list[str] | None = None
 
 
-def get_all_constituency_names() -> list[str]:
-    """Return sorted list of all distinct constituency names. Cached after first call."""
-    global _constituency_names
-    if _constituency_names is not None:
-        return _constituency_names
+def _fetch_constituency_names() -> list[str]:
     client = _get_client()
     dataset = f"{settings.gcp_project_id}.{settings.bigquery_dataset}"
     query = f"""
     SELECT DISTINCT Constituency_Name
     FROM `{dataset}.results_combined`
-    WHERE Year IN (2004, 2009, 2014, 2019, 2024)
+    WHERE Year IN (2004, 2009, 2014, 2019)
     ORDER BY Constituency_Name
     """
     rows = list(client.query(query).result())
-    _constituency_names = [row.Constituency_Name for row in rows]
+    return [row.Constituency_Name for row in rows]
+
+
+async def get_all_constituency_names() -> list[str]:
+    """Return sorted list of all distinct constituency names. Cached after first call."""
+    global _constituency_names
+    if _constituency_names is not None:
+        return _constituency_names
+    names = await asyncio.get_running_loop().run_in_executor(None, _fetch_constituency_names)
+    _constituency_names = names
     return _constituency_names
 
 
-def search_constituencies(q: str, limit: int = 20) -> list[str]:
+async def search_constituencies(q: str, limit: int = 20) -> list[str]:
     """Return constituency names containing q (case-insensitive), up to limit results."""
     q_upper = q.upper().strip()
     if not q_upper:
         return []
-    names = get_all_constituency_names()
+    names = await get_all_constituency_names()
     matches = [n for n in names if q_upper in n.upper()]
     return matches[:limit]
 
 
-def get_constituency_history(pc_name: str) -> list[ElectionYear]:
-    """Return election results for a constituency across all general elections.
-
-    Queries winners and top 5 candidates per general election year (2004, 2009, 2014, 2019).
-    Constituency name match is case-insensitive.
-    """
+def _fetch_constituency_history(pc_name: str) -> list[ElectionYear]:
     client = _get_client()
     dataset = f"{settings.gcp_project_id}.{settings.bigquery_dataset}"
 
@@ -81,7 +82,7 @@ def get_constituency_history(pc_name: str) -> list[ElectionYear]:
     WITH general_elections AS (
         SELECT *
         FROM `{dataset}.results_combined`
-        WHERE Year IN (2004, 2009, 2014, 2019, 2024)
+        WHERE Year IN (2004, 2009, 2014, 2019)
           AND UPPER(Constituency_Name) = UPPER(@pc_name)
     )
     SELECT
@@ -141,3 +142,14 @@ def get_constituency_history(pc_name: str) -> list[ElectionYear]:
             )
 
     return sorted(years.values(), key=lambda e: e.year)
+
+
+async def get_constituency_history(pc_name: str) -> list[ElectionYear]:
+    """Return election results for a constituency across general elections 2004–2019.
+
+    Queries winners and top 5 candidates per election year. Constituency name match is
+    case-insensitive.
+    """
+    return await asyncio.get_running_loop().run_in_executor(
+        None, _fetch_constituency_history, pc_name
+    )
