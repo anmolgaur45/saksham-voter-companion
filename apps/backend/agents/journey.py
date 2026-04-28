@@ -6,6 +6,18 @@ from vertexai.generative_models import GenerationConfig, GenerativeModel
 from core.config import settings
 from services.firestore import get_session, update_session
 
+_STOPWORDS = frozenset({
+    "yes", "no", "ok", "okay", "sure", "fine", "yep", "nope", "yeah", "nah",
+    "hi", "hello", "thanks", "alright", "great", "good",
+})
+
+
+def _is_substantive(message: str) -> bool:
+    words = [w.strip(".,!?") for w in message.lower().split()]
+    non_stop = [w for w in words if w and w not in _STOPWORDS]
+    return len(non_stop) >= 2
+
+
 _STEPS = [
     "step_voter_type",
     "step_state",
@@ -70,7 +82,7 @@ class JourneyAgent:
         )
         text = cr.text if cr.candidates else "Let's get started. Are you a first-time voter?"
 
-        if pending and len(message.split()) >= 1:
+        if pending and _is_substantive(message):
             await update_session(session_id, {"completed_steps": completed + [current_step]})
 
         return {"response": text, "citations": [], "agent": "journey"}

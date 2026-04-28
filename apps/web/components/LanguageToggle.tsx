@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const LANGUAGES = [
-  { code: "en", label: "EN" },
-  { code: "hi", label: "हिं" },
-  { code: "ta", label: "தமி" },
-  { code: "bn", label: "বাং" },
+  { code: "en", label: "EN",  ariaLabel: "English" },
+  { code: "hi", label: "हिं", ariaLabel: "Hindi"   },
+  { code: "ta", label: "தமி", ariaLabel: "Tamil"   },
+  { code: "bn", label: "বাং", ariaLabel: "Bengali" },
 ];
 
 const COOKIE_KEY = "saksham_lang";
@@ -52,10 +52,10 @@ export function LanguageToggle({ onChange }: Props) {
           key={l.code}
           size="sm"
           variant={active === l.code ? "default" : "outline"}
-          className="text-xs px-2 h-7"
+          className="text-xs px-2 h-9 min-w-[44px]"
           onClick={() => select(l.code)}
           aria-pressed={active === l.code}
-          aria-label={l.label}
+          aria-label={l.ariaLabel}
         >
           {l.label}
         </Button>

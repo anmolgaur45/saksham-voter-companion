@@ -95,7 +95,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
-      <div className="grid h-dvh" style={{ gridTemplateRows: "auto 1fr auto" }}>
+      <div className="relative grid h-dvh" style={{ gridTemplateRows: "auto 1fr auto" }}>
+        <a href="#main-content" className="skip-to-main">Skip to main content</a>
         <header className="sticky top-0 z-50 border-b bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
             <div className="flex items-center gap-6">
@@ -117,7 +118,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
         </header>
 
-        <main className="overflow-y-auto overflow-x-hidden min-h-0">
+        <main id="main-content" className="overflow-y-auto overflow-x-hidden min-h-0">
           <CredibilityStrip />
           {children}
         </main>

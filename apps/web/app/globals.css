@@ -14,7 +14,7 @@
   /* Text */
   --text-primary:   #F5F7FA;
   --text-secondary: #A8B1C2;
-  --text-tertiary:  #6B7489;
+  --text-tertiary:  #8A93A6;
   --text-muted:     #7A849A;
 
   /* Accent — saffron. CTAs, active nav, countdown, progress bar only. Nothing else. */
@@ -193,5 +193,33 @@
   }
   h2, h3 {
     font-weight: 500;
+  }
+}
+
+/* Skip-to-main link — off-screen until focused by keyboard */
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: var(--accent-primary);
+  color: var(--bg-canvas);
+  text-decoration: none;
+}
+.skip-to-main:focus {
+  top: 1rem;
+}
+
+/* Reduced motion — disable CSS transitions and animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

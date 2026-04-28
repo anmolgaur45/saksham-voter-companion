@@ -51,7 +51,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${ibmPlexDevanagari.variable} ${notoSansTamil.variable} ${notoSansBengali.variable} antialiased`}
     >
-      <body>
+      <body suppressHydrationWarning>
         <AppShell>{children}</AppShell>
       </body>
     </html>
