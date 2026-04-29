@@ -1,3 +1,5 @@
+"""Structlog configuration and request-ID middleware for per-request log correlation."""
+
 import logging
 import time
 import uuid

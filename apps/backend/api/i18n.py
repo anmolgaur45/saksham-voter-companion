@@ -1,3 +1,5 @@
+"""Batch translation endpoint for concurrent UI string localisation."""
+
 import asyncio
 from typing import Annotated
 
@@ -40,7 +42,5 @@ async def translate_batch(body: TranslateRequest) -> TranslateResponse:
     """
     if body.lang == "en" or not body.texts:
         return TranslateResponse(translated=body.texts)
-    results = list(
-        await asyncio.gather(*[translate_text(t, body.lang) for t in body.texts])
-    )
+    results = list(await asyncio.gather(*[translate_text(t, body.lang) for t in body.texts]))
     return TranslateResponse(translated=results)

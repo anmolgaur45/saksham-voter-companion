@@ -12,10 +12,7 @@ export function useI18n<T extends Record<string, string>>(source: T): T {
   const [result, setResult] = useState<T>(source);
 
   useEffect(() => {
-    if (language === "en") {
-      setResult(source);
-      return;
-    }
+    if (language === "en") return;
 
     const keys = Object.keys(source) as (keyof T)[];
     const texts = keys.map((k) => source[k]);
@@ -23,6 +20,7 @@ export function useI18n<T extends Record<string, string>>(source: T): T {
 
     if (_cache.has(cacheKey)) {
       const cached = _cache.get(cacheKey)!;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setResult(Object.fromEntries(keys.map((k, i) => [k, cached[i] ?? source[k]])) as T);
       return;
     }
@@ -35,7 +33,8 @@ export function useI18n<T extends Record<string, string>>(source: T): T {
       .catch(() => {
         // keep English on error
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
-  return result;
+  return language === "en" ? source : result;
 }

@@ -1,3 +1,5 @@
+"""Election timeline endpoints with in-memory per-language translation caching."""
+
 import asyncio
 import json
 from functools import lru_cache
@@ -21,9 +23,15 @@ class TimelinePhase(BaseModel):
     title: str = Field(..., description="Display name of the election phase")
     short_description: str = Field(..., description="One-sentence summary of the phase")
     duration: str | None = Field(None, description="Typical duration (e.g. '7 days', '48 hours')")
-    what_happens: str = Field(..., description="Plain-language explanation of what occurs in this phase")
-    what_citizens_can_do: list[str] = Field(..., description="Actions a citizen can take during this phase")
-    what_is_restricted: list[str] = Field(..., description="Activities prohibited during this phase")
+    what_happens: str = Field(
+        ..., description="Plain-language explanation of what occurs in this phase"
+    )
+    what_citizens_can_do: list[str] = Field(
+        ..., description="Actions a citizen can take during this phase"
+    )
+    what_is_restricted: list[str] = Field(
+        ..., description="Activities prohibited during this phase"
+    )
     icon_name: str = Field(..., description="Lucide icon name used for UI rendering")
     source_citation: str | None = Field(None, description="ECI source document and page reference")
 

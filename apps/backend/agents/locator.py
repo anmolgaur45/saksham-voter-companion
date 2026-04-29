@@ -1,11 +1,16 @@
+"""Locator agent: extracts a location from the user message and returns polling booth data."""
+
 from __future__ import annotations
 
 import json
 
+import structlog
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
 from services.firestore import search_constituency
+
+_log = structlog.get_logger()
 
 _EXTRACT_PROMPT = """\
 Extract the location from the user's message.
@@ -49,6 +54,7 @@ class LocatorAgent:
         try:
             location: str | None = json.loads(cr.text).get("location")
         except Exception:
+            _log.warning("location_parse_error", raw=cr.text)
             location = None
 
         if not location:

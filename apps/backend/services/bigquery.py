@@ -1,3 +1,5 @@
+"""BigQuery service for constituency election history queries from the results_combined table."""
+
 import asyncio
 from dataclasses import dataclass
 

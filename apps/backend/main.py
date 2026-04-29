@@ -1,3 +1,5 @@
+"""FastAPI application entry point: registers routers, middleware, and initialises Vertex AI."""
+
 from contextlib import asynccontextmanager
 
 import vertexai

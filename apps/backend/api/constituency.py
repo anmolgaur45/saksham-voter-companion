@@ -1,3 +1,5 @@
+"""Constituency election history endpoints backed by BigQuery."""
+
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel
 
@@ -68,7 +70,9 @@ def _to_response(pc_name: str, rows: list[bq_service.ElectionYear]) -> Constitue
     summary="Search constituency names",
     description="Returns constituency names containing the query string (case-insensitive). Cached after first call.",
 )
-async def search_constituencies(q: str = Query(default="", min_length=1, max_length=200)) -> list[str]:
+async def search_constituencies(
+    q: str = Query(default="", min_length=1, max_length=200),
+) -> list[str]:
     return await bq_service.search_constituencies(q)
 
 
@@ -87,6 +91,6 @@ async def get_history(pc_name: str) -> ConstituencyHistory:
         raise HTTPException(
             status_code=404,
             detail=f"No election data found for constituency '{pc_name}'. "
-                   "Check spelling — use the official ECI constituency name.",
+            "Check spelling — use the official ECI constituency name.",
         )
     return _to_response(pc_name, results)

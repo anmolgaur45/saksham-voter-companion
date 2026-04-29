@@ -1,3 +1,5 @@
+"""Chat endpoint: routes user messages through the multi-agent orchestrator."""
+
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
@@ -17,9 +19,13 @@ def _get_orchestrator() -> OrchestratorAgent:
 
 class ChatRequest(BaseModel):
     message: str = Field(..., max_length=4000, description="User message text")
-    session_id: str = Field(..., max_length=200, description="Anonymous session UUID from the browser")
+    session_id: str = Field(
+        ..., max_length=200, description="Anonymous session UUID from the browser"
+    )
     language: str = Field(
-        "en", max_length=10, description="BCP-47 language code for input and output (en, hi, ta, bn)"
+        "en",
+        max_length=10,
+        description="BCP-47 language code for input and output (en, hi, ta, bn)",
     )
     agent_override: str | None = Field(
         None,

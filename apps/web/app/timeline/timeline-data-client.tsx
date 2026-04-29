@@ -15,10 +15,7 @@ export function TimelineWithLanguage({
   const [phases, setPhases] = useState(initialPhases);
 
   useEffect(() => {
-    if (language === "en") {
-      setPhases(initialPhases);
-      return;
-    }
+    if (language === "en") return;
     getTimeline(language)
       .then(setPhases)
       .catch(() => {
@@ -26,5 +23,5 @@ export function TimelineWithLanguage({
       });
   }, [language]);
 
-  return <TimelineClient phases={phases} />;
+  return <TimelineClient phases={language === "en" ? initialPhases : phases} />;
 }

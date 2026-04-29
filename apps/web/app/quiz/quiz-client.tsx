@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { CheckCircle2, XCircle, RotateCcw, BookOpen, ChevronRight } from "lucide-react";
@@ -268,7 +268,7 @@ export default function QuizClient() {
   const [answerState, setAnswerState] = useState<AnswerState>("idle");
   const [score, setScore]     = useState(0);
   const [done, setDone]       = useState(false);
-  const [confettiFired, setConfettiFired] = useState(false);
+  const confettiFiredRef = useRef(false);
 
   const q = (questions as Question[])[index]!;
   const total = (questions as Question[]).length;
@@ -294,11 +294,11 @@ export default function QuizClient() {
 
   // Fire confetti once when done with high score
   useEffect(() => {
-    if (done && !confettiFired && score / total >= 0.8) {
-      setConfettiFired(true);
+    if (done && !confettiFiredRef.current && score / total >= 0.8) {
+      confettiFiredRef.current = true;
       fireConfetti().catch(() => {});
     }
-  }, [done, confettiFired, score, total]);
+  }, [done, score, total]);
 
   function handleSelect(optionIndex: number) {
     if (answerState !== "idle") return;
@@ -328,7 +328,7 @@ export default function QuizClient() {
     setAnswerState("idle");
     setScore(0);
     setDone(false);
-    setConfettiFired(false);
+    confettiFiredRef.current = false;
   }
 
   if (done) {
@@ -382,7 +382,7 @@ export default function QuizClient() {
             <div className="flex flex-col gap-2.5">
               {q.options.map((opt, i) => (
                 <OptionButton
-                  key={i}
+                  key={`${i}-${opt}`}
                   text={opt}
                   index={i}
                   selected={selected === i}

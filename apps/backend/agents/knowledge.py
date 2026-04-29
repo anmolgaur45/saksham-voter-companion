@@ -1,3 +1,5 @@
+"""Knowledge agent: answers election questions grounded in ECI documents via Vertex AI Search."""
+
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings

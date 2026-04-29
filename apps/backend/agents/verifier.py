@@ -1,3 +1,5 @@
+"""Verifier agent: fact-checks claims against ECI source documents."""
+
 from __future__ import annotations
 
 from vertexai.generative_models import GenerationConfig, GenerativeModel

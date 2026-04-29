@@ -27,21 +27,21 @@ interface Props {
 }
 
 export function LanguageToggle({ onChange }: Props) {
-  const [active, setActive] = useState("en");
+  const [active, setActive] = useState(() => getLangFromCookie());
 
   useEffect(() => {
     const lang = getLangFromCookie();
-    if (lang !== "en") {
-      setActive(lang);
-      onChange(lang);
-    }
+    if (lang !== "en") onChange(lang);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = active;
+  }, [active]);
 
   function select(code: string) {
     setActive(code);
     setLangCookie(code);
-    document.documentElement.lang = code;
     onChange(code);
   }
 

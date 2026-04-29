@@ -1,3 +1,5 @@
+"""Polling booth lookup endpoint backed by Firestore constituency documents."""
+
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
@@ -40,6 +42,7 @@ class ConstituencyResponse(BaseModel):
 async def booth(
     q: str = Query(..., max_length=200, description="Constituency ID or partial name/city"),
 ) -> ConstituencyResponse:
+    """Look up polling booths for a constituency by ID or partial name."""
     result = await get_constituency_by_id(q) or await search_constituency(q)
     if not result:
         raise HTTPException(status_code=404, detail=f"No polling booth data found for '{q}'")

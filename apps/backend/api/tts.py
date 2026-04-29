@@ -1,3 +1,5 @@
+"""Text-to-speech endpoint using Cloud Text-to-Speech."""
+
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
@@ -27,5 +29,6 @@ class TtsResponse(BaseModel):
     ),
 )
 async def tts(req: TtsRequest) -> TtsResponse:
+    """Synthesize the request text and return base64-encoded MP3 audio."""
     audio = await synthesize_speech(req.text, req.language)
     return TtsResponse(audio=audio)

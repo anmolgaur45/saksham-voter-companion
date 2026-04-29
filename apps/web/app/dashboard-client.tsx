@@ -20,6 +20,7 @@ export function DashboardPage() {
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setProfile(stored ? (JSON.parse(stored) as Profile) : null);
   }, []);
 

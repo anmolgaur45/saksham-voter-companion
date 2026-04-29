@@ -1,3 +1,5 @@
+"""Application settings loaded from environment variables and .env.local."""
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,7 +18,9 @@ class Settings(BaseSettings):
     log_level: str = Field(
         "INFO", description="Structlog minimum level (DEBUG, INFO, WARNING, ERROR)"
     )
-    bigquery_dataset: str = Field("election_history", description="BigQuery dataset for constituency election history")
+    bigquery_dataset: str = Field(
+        "election_history", description="BigQuery dataset for constituency election history"
+    )
     internal_api_key: str = Field("", description="Shared secret for API key auth fallback")
 
     model_config = SettingsConfigDict(env_file=".env.local", extra="ignore")

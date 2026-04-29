@@ -1,3 +1,5 @@
+"""Orchestrator agent: classifies intent and dispatches to the appropriate specialist agent."""
+
 from __future__ import annotations
 
 import json
@@ -106,6 +108,7 @@ class OrchestratorAgent:
                 try:
                     classified = Intent(json.loads(cr.text).get("intent", "journey"))
                 except Exception:
+                    _log.warning("classify_parse_error", raw=cr.text)
                     classified = Intent.journey
                 # Only break out of journey for explicit different intents
                 if classified in (Intent.knowledge, Intent.locator, Intent.verifier):
@@ -123,6 +126,7 @@ class OrchestratorAgent:
                 try:
                     intent = Intent(json.loads(cr.text).get("intent", "knowledge"))
                 except Exception:
+                    _log.warning("classify_parse_error", raw=cr.text)
                     intent = Intent.knowledge
 
         _log.info("dispatch", agent_name=intent.value)

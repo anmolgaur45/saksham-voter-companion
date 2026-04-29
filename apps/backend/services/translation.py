@@ -1,3 +1,5 @@
+"""Cloud Translation service wrapper for text translation and English normalisation."""
+
 from __future__ import annotations
 
 import asyncio

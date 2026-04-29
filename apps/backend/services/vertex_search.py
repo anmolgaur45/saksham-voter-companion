@@ -1,3 +1,5 @@
+"""Vertex AI Search utilities: grounding tool construction and citation extraction."""
+
 from vertexai.generative_models import Tool, grounding
 
 

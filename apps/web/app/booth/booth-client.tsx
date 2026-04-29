@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   APIProvider,
   Map,
@@ -32,7 +32,7 @@ export default function BoothClient({ initialQuery }: { initialQuery?: string })
     mapPlaceholder: "Map will appear after search.",
   });
 
-  async function search(q: string) {
+  const search = useCallback(async (q: string) => {
     if (!q.trim()) return;
     setLoading(true);
     setError(null);
@@ -44,12 +44,12 @@ export default function BoothClient({ initialQuery }: { initialQuery?: string })
     } finally {
       setLoading(false);
     }
-  }
+  }, [t.errorMsg]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (initialQuery) void search(initialQuery);
-  }, [initialQuery]);
+  }, [initialQuery, search]);
 
   return (
     <div className="h-full flex flex-col md:flex-row gap-0 md:gap-px">

@@ -7,7 +7,6 @@ import {
   Circle,
   CalendarDays,
   MessageCircle,
-  MapPin,
   ShieldCheck,
   Play,
   GraduationCap,
@@ -72,10 +71,10 @@ export default function Dashboard({ profile }: { profile: Profile }) {
   const cd = useCountdown(POLLING_DATE);
   const [checklist, setChecklist] = useState(DEFAULT_CHECKLIST);
 
-  const msLeft = POLLING_DATE.getTime() - Date.now();
-  const daysLeft = Math.floor(msLeft / 86_400_000);
+  const daysLeft = cd.days;
+  const elapsed = cd.days === 0 && cd.hours === 0 && cd.mins === 0 && cd.secs === 0;
   const pollingSubline =
-    msLeft <= 0
+    elapsed
       ? "Counting in progress."
       : daysLeft === 0
       ? "Polling day is today."
@@ -85,7 +84,6 @@ export default function Dashboard({ profile }: { profile: Profile }) {
 
   useEffect(() => {
     if (!profile.constituency) return;
-    setHistoryLoading(true);
     getConstituencyHistory(profile.constituency)
       .then((data) => { setHistoryData(data); setHistoryLoading(false); })
       .catch(() => { setHistoryLoading(false); });

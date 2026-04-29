@@ -1,3 +1,5 @@
+"""Journey agent: guides users through the 5-step voter onboarding checklist."""
+
 from __future__ import annotations
 
 import vertexai
@@ -6,10 +8,26 @@ from vertexai.generative_models import GenerationConfig, GenerativeModel
 from core.config import settings
 from services.firestore import get_session, update_session
 
-_STOPWORDS = frozenset({
-    "yes", "no", "ok", "okay", "sure", "fine", "yep", "nope", "yeah", "nah",
-    "hi", "hello", "thanks", "alright", "great", "good",
-})
+_STOPWORDS = frozenset(
+    {
+        "yes",
+        "no",
+        "ok",
+        "okay",
+        "sure",
+        "fine",
+        "yep",
+        "nope",
+        "yeah",
+        "nah",
+        "hi",
+        "hello",
+        "thanks",
+        "alright",
+        "great",
+        "good",
+    }
+)
 
 
 def _is_substantive(message: str) -> bool:

@@ -1,3 +1,5 @@
+"""Global exception handler that logs unhandled errors and returns a 500 JSON response."""
+
 import structlog
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse

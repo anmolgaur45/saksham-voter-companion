@@ -143,8 +143,8 @@ function ResultsView({ data }: { data: ConstituencyHistory }) {
                       Top candidates
                     </p>
                     <div className="flex flex-col gap-1">
-                      {e.top_candidates.map((c, i) => (
-                        <div key={i} className="flex items-center gap-2 text-sm">
+                      {e.top_candidates.map((c) => (
+                        <div key={c.candidate} className="flex items-center gap-2 text-sm">
                           <span
                             className="w-2 h-2 rounded-full shrink-0"
                             style={{ backgroundColor: partyColor(c.party) }}
@@ -173,7 +173,7 @@ function ResultsView({ data }: { data: ConstituencyHistory }) {
 }
 
 export function ConstituencyClient({ initialQuery }: { initialQuery?: string }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery ?? "");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [data, setData] = useState<ConstituencyHistory | null>(null);
@@ -210,7 +210,6 @@ export function ConstituencyClient({ initialQuery }: { initialQuery?: string }) 
   // Auto-load from prop passed by the server component (avoids useSearchParams entirely)
   useEffect(() => {
     if (!initialQuery) return;
-    setQuery(initialQuery);
     let cancelled = false;
     (async () => {
       try {

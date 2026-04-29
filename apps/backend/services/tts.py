@@ -1,3 +1,5 @@
+"""Cloud Text-to-Speech service wrapper for MP3 audio synthesis."""
+
 from __future__ import annotations
 
 import asyncio

@@ -1,3 +1,5 @@
+"""Firestore service for constituency lookup and anonymous session management."""
+
 from __future__ import annotations
 
 from google.cloud import firestore
