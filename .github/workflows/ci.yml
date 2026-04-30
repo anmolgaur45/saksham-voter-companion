@@ -22,6 +22,8 @@ jobs:
         run: uv sync --all-groups
       - name: run tests
         run: uv run pytest tests/ -v
+      - name: mypy
+        run: uv run mypy agents api core services main.py
 
   frontend-build:
     name: frontend build

@@ -1,5 +1,7 @@
 """Knowledge agent: answers election questions grounded in ECI documents via Vertex AI Search."""
 
+from typing import Any
+
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
@@ -39,7 +41,7 @@ class KnowledgeAgent:
             settings.vertex_search_datastore_id,
         )
 
-    async def run(self, message: str) -> dict:
+    async def run(self, message: str) -> dict[str, Any]:
         """Answer an election-related question, grounded in ECI documents.
 
         Attempts Vertex AI Search grounding first. Falls back to ungrounded
@@ -52,7 +54,7 @@ class KnowledgeAgent:
             Dict with keys: response (str), citations (list), agent ("knowledge"),
             grounded (bool — True if ECI sources were retrieved).
         """
-        response = self._model.generate_content(
+        response = await self._model.generate_content_async(
             contents=message,
             tools=[self._tool],
             generation_config=GenerationConfig(temperature=0),
@@ -69,7 +71,7 @@ class KnowledgeAgent:
             }
 
         # Grounding returned no sources — fall back to ungrounded Gemini
-        fb = self._fallback_model.generate_content(
+        fb = await self._fallback_model.generate_content_async(
             contents=message,
             generation_config=GenerationConfig(temperature=0.2),
         )

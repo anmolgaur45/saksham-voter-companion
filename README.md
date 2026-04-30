@@ -63,6 +63,18 @@ The Practice Simulator and Quiz are front-end only and do not call the backend.
 | BigQuery | Lok Sabha election results, 2004 to 2019 |
 | Cloud Logging | Structured JSON logs with request_id and latency |
 
+## Engineering practices
+
+Backend type-checked with `mypy strict` in CI. Lint via `ruff`. Coverage gate at 80%
+(`--cov-fail-under=80` in `apps/backend/pyproject.toml`).
+
+Security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+Permissions-Policy, COOP, CORP, X-Request-ID) added via middleware in
+`apps/backend/core/security_headers.py`. Per-IP rate limit on `/api/chat` (30/min) and
+`/api/tts` (20/min), returns 429 with `Retry-After`. Body-size cap of 16 KiB before parsing.
+
+Frontend type-checked and built in CI. E2E tests via Playwright in `apps/web/e2e/`.
+
 ## Local development
 
 ```bash

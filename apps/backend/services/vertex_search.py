@@ -1,5 +1,7 @@
 """Vertex AI Search utilities: grounding tool construction and citation extraction."""
 
+from typing import Any
+
 from vertexai.generative_models import Tool, grounding
 
 
@@ -20,7 +22,7 @@ def build_search_tool(project_id: str, datastore_id: str) -> Tool:
     return Tool.from_retrieval(grounding.Retrieval(grounding.VertexAISearch(datastore=path)))
 
 
-def extract_citations(response: object) -> list[dict[str, str | None]]:
+def extract_citations(response: Any) -> list[dict[str, str | None]]:
     """Extract unique, browser-accessible citations from a grounded Gemini response.
 
     Args:
@@ -33,7 +35,7 @@ def extract_citations(response: object) -> list[dict[str, str | None]]:
     """
     if not getattr(response, "candidates", None):
         return []
-    meta = getattr(response.candidates[0], "grounding_metadata", None)  # type: ignore[union-attr]
+    meta = getattr(response.candidates[0], "grounding_metadata", None)
     if not meta:
         return []
     seen: set[str] = set()

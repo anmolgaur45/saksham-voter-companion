@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 import structlog
+from pydantic import BaseModel, Field
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
@@ -27,11 +29,15 @@ _NOT_FOUND = (
 )
 
 
+class _LocationResult(BaseModel):
+    location: str = Field("", description="Extracted location, or empty string if not found")
+
+
 class LocatorAgent:
     def __init__(self) -> None:
         self._model = GenerativeModel(settings.vertex_model)
 
-    async def run(self, message: str) -> dict:
+    async def run(self, message: str) -> dict[str, Any]:
         """Extract a location from the user message and look up polling booths.
 
         Uses Gemini to extract a location string, then fuzzy-matches it against
@@ -44,15 +50,16 @@ class LocatorAgent:
             Dict with keys: response (str), citations ([]), agent ("locator"),
             and optionally booth_query (str constituency ID for map rendering).
         """
-        cr = self._model.generate_content(
+        cr = await self._model.generate_content_async(
             contents=f"{_EXTRACT_PROMPT}\n\nUser: {message}",
             generation_config=GenerationConfig(
                 response_mime_type="application/json",
+                response_schema=_LocationResult.model_json_schema(),
                 temperature=0,
             ),
         )
         try:
-            location: str | None = json.loads(cr.text).get("location")
+            location: str | None = json.loads(cr.text).get("location") or None
         except Exception:
             _log.warning("location_parse_error", raw=cr.text)
             location = None

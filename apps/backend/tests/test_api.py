@@ -171,3 +171,83 @@ async def test_chat_with_knowledge_override(client):
     )
     assert r.status_code == 200
     assert r.json()["agent"] == "knowledge"
+
+
+@pytest.mark.asyncio
+async def test_booth_returns_404_when_constituency_not_found(client):
+    r = await client.get("/api/booth?q=nonexistent-place")
+    assert r.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_translate_batch_returns_input_unchanged_for_english(client):
+    r = await client.post(
+        "/api/translate",
+        json={"texts": ["hello", "world"], "lang": "en"},
+    )
+    assert r.status_code == 200
+    assert r.json()["translated"] == ["hello", "world"]
+
+
+@pytest.mark.asyncio
+async def test_orchestrator_invalid_agent_override_falls_back_to_knowledge(client):
+    r = await client.post(
+        "/api/chat",
+        json={
+            "message": "how do I register?",
+            "session_id": "test-session",
+            "agent_override": "bogus_agent",
+        },
+    )
+    assert r.status_code == 200
+    assert r.json()["agent"] == "knowledge"
+
+
+@pytest.mark.asyncio
+async def test_chat_translates_non_english_request(client):
+    with (
+        patch(
+            "api.chat.translate_to_english",
+            new_callable=AsyncMock,
+            return_value="how do I register?",
+        ),
+        patch("api.chat.translate_text", new_callable=AsyncMock, return_value="कैसे रजिस्टर करें?"),
+    ):
+        r = await client.post(
+            "/api/chat",
+            json={
+                "message": "मैं कैसे रजिस्टर करूं?",
+                "session_id": "test-session",
+                "language": "hi",
+            },
+        )
+    assert r.status_code == 200
+    assert r.json()["response"] == "कैसे रजिस्टर करें?"
+
+
+@pytest.mark.asyncio
+async def test_constituency_search_returns_list(client):
+    r = await client.get("/api/constituency/search?q=Delhi")
+    assert r.status_code == 200
+    assert isinstance(r.json(), list)
+
+
+def test_global_exception_handler_returns_500_json():
+    # Uses synchronous TestClient with raise_server_exceptions=False so the
+    # 500 JSONResponse from global_handler is returned rather than re-raised.
+    from fastapi import FastAPI
+    from starlette.testclient import TestClient
+
+    from core.exceptions import add_exception_handler
+
+    minimal_app = FastAPI()
+    add_exception_handler(minimal_app)
+
+    @minimal_app.get("/error")
+    def _error():
+        raise RuntimeError("kaboom")
+
+    with TestClient(minimal_app, raise_server_exceptions=False) as tc:
+        r = tc.get("/error")
+    assert r.status_code == 500
+    assert r.json() == {"error": "internal server error"}

@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { searchConstituencyNames } from "@/app/chat/actions";
 import type { Profile } from "@/app/dashboard-client";
 
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export default function OnboardingModal({
   onComplete,
   onDismiss,
@@ -19,10 +22,57 @@ export default function OnboardingModal({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [language, setLanguage] = useState("en");
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<Element | null>(null);
 
+  // Capture trigger, hide background siblings from screen readers, restore on close
+  useEffect(() => {
+    triggerRef.current = document.activeElement;
+    const main = document.getElementById("main-content");
+    const hidden: Element[] = [];
+    if (main?.parentElement) {
+      for (const el of Array.from(main.parentElement.children)) {
+        if (el !== main) {
+          el.setAttribute("aria-hidden", "true");
+          hidden.push(el);
+        }
+      }
+    }
+    return () => {
+      hidden.forEach((el) => el.removeAttribute("aria-hidden"));
+      if (triggerRef.current instanceof HTMLElement) {
+        triggerRef.current.focus();
+      }
+    };
+  }, []);
+
+  // Move focus to first focusable element inside the dialog whenever the step changes
+  useEffect(() => {
+    const first = dialogRef.current?.querySelector<HTMLElement>(FOCUSABLE);
+    first?.focus();
+  }, [step]);
+
+  // Escape closes; Tab/Shift+Tab cycle within the dialog
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onDismiss();
+      if (e.key === "Escape") {
+        onDismiss();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -56,6 +106,10 @@ export default function OnboardingModal({
       onClick={(e) => e.target === e.currentTarget && onDismiss()}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="onboarding-heading"
         className="w-full max-w-md rounded-xl p-8 space-y-6"
         style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border-default)" }}
       >
@@ -85,7 +139,7 @@ export default function OnboardingModal({
         {/* Step 1 — name */}
         {step === 1 && (
           <div className="space-y-5">
-            <h2 className="text-[22px]" style={{ color: "var(--text-primary)" }}>
+            <h2 id="onboarding-heading" className="text-[22px]" style={{ color: "var(--text-primary)" }}>
               What should we call you?
             </h2>
             <input
@@ -122,7 +176,7 @@ export default function OnboardingModal({
         {/* Step 2 — first-time voter */}
         {step === 2 && (
           <div className="space-y-5">
-            <h2 className="text-[22px]" style={{ color: "var(--text-primary)" }}>
+            <h2 id="onboarding-heading" className="text-[22px]" style={{ color: "var(--text-primary)" }}>
               Are you a first-time voter?
             </h2>
             <div className="flex gap-3">
@@ -160,7 +214,7 @@ export default function OnboardingModal({
         {/* Step 3 — constituency */}
         {step === 3 && (
           <div className="space-y-5">
-            <h2 className="text-[22px]" style={{ color: "var(--text-primary)" }}>
+            <h2 id="onboarding-heading" className="text-[22px]" style={{ color: "var(--text-primary)" }}>
               What&apos;s your constituency?
             </h2>
             <div className="relative">
@@ -214,7 +268,7 @@ export default function OnboardingModal({
         {/* Step 4 — language */}
         {step === 4 && (
           <div className="space-y-5">
-            <h2 className="text-[22px]" style={{ color: "var(--text-primary)" }}>
+            <h2 id="onboarding-heading" className="text-[22px]" style={{ color: "var(--text-primary)" }}>
               Preferred language?
             </h2>
             <div className="grid grid-cols-2 gap-3">

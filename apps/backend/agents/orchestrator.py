@@ -5,8 +5,10 @@ from __future__ import annotations
 import json
 import time
 from enum import StrEnum
+from typing import Any
 
 import structlog
+from pydantic import BaseModel, Field
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from agents.journey import JourneyAgent
@@ -47,6 +49,10 @@ _OUT_OF_SCOPE = (
 )
 
 
+class _IntentResult(BaseModel):
+    intent: str = Field(..., description="Intent category for the user message")
+
+
 class Intent(StrEnum):
     knowledge = "knowledge"
     locator = "locator"
@@ -64,12 +70,27 @@ class OrchestratorAgent:
         self._verifier = VerifierAgent()
         self._journey = JourneyAgent()
 
+    async def _classify(self, message: str) -> Intent | None:
+        cr = await self._classifier.generate_content_async(
+            contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
+            generation_config=GenerationConfig(
+                response_mime_type="application/json",
+                response_schema=_IntentResult.model_json_schema(),
+                temperature=0,
+            ),
+        )
+        try:
+            return Intent(json.loads(cr.text).get("intent", ""))
+        except Exception:
+            _log.warning("classify_parse_error", raw=cr.text)
+            return None
+
     async def run(
         self,
         session_id: str,
         message: str,
         agent_override: str | None = None,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """Classify intent and dispatch to the appropriate specialist agent.
 
         If a journey session is active, keeps routing to the Journey agent
@@ -94,40 +115,20 @@ class OrchestratorAgent:
             except ValueError:
                 intent = Intent.knowledge
         else:
-            # If an active journey session exists, keep routing there unless
-            # the message is clearly a different intent (locator/verifier/knowledge question)
             session = await get_session(session_id)
+            classified = await self._classify(message)
             if session.get("journey_active"):
-                cr = self._classifier.generate_content(
-                    contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
-                    generation_config=GenerationConfig(
-                        response_mime_type="application/json",
-                        temperature=0,
-                    ),
-                )
-                try:
-                    classified = Intent(json.loads(cr.text).get("intent", "journey"))
-                except Exception:
-                    _log.warning("classify_parse_error", raw=cr.text)
-                    classified = Intent.journey
-                # Only break out of journey for explicit different intents
-                if classified in (Intent.knowledge, Intent.locator, Intent.verifier):
+                # Only break out of an active journey for explicit different intents
+                if classified is not None and classified in (
+                    Intent.knowledge,
+                    Intent.locator,
+                    Intent.verifier,
+                ):
                     intent = classified
                 else:
                     intent = Intent.journey
             else:
-                cr = self._classifier.generate_content(
-                    contents=f"{_CLASSIFIER_PROMPT}\n\nUser: {message}",
-                    generation_config=GenerationConfig(
-                        response_mime_type="application/json",
-                        temperature=0,
-                    ),
-                )
-                try:
-                    intent = Intent(json.loads(cr.text).get("intent", "knowledge"))
-                except Exception:
-                    _log.warning("classify_parse_error", raw=cr.text)
-                    intent = Intent.knowledge
+                intent = classified if classified is not None else Intent.knowledge
 
         _log.info("dispatch", agent_name=intent.value)
 

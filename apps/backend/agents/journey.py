@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import vertexai
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
@@ -65,7 +67,7 @@ class JourneyAgent:
         vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
         self._model = GenerativeModel(settings.vertex_model, system_instruction=_SYSTEM)
 
-    async def run(self, session_id: str, message: str) -> dict:
+    async def run(self, session_id: str, message: str) -> dict[str, Any]:
         """Advance the voter onboarding checklist by one step.
 
         Reads completed_steps from Firestore, determines the current step,
@@ -94,7 +96,7 @@ class JourneyAgent:
             "briefly acknowledge it and then move to the next step's question."
         )
 
-        cr = self._model.generate_content(
+        cr = await self._model.generate_content_async(
             contents=prompt,
             generation_config=GenerationConfig(temperature=0.3),
         )

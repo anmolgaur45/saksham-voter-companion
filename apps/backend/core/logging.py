@@ -6,7 +6,7 @@ import uuid
 
 import structlog
 from fastapi import Request, Response
-from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
 
 def configure_logging(level: str = "INFO") -> None:
@@ -26,8 +26,8 @@ def configure_logging(level: str = "INFO") -> None:
 
 
 class RequestIdMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next) -> Response:
-        request_id = str(uuid.uuid4())
+    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+        request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
         structlog.contextvars.clear_contextvars()
         structlog.contextvars.bind_contextvars(request_id=request_id)
         start = time.monotonic()
@@ -40,5 +40,5 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
             status=response.status_code,
             latency_ms=latency_ms,
         )
-        response.headers["X-Request-Id"] = request_id
+        response.headers["X-Request-ID"] = request_id
         return response

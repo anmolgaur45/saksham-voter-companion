@@ -1,5 +1,6 @@
 """FastAPI application entry point: registers routers, middleware, and initialises Vertex AI."""
 
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 import vertexai
@@ -15,10 +16,12 @@ from api.tts import router as tts_router
 from core.config import settings
 from core.exceptions import add_exception_handler
 from core.logging import RequestIdMiddleware, configure_logging
+from core.rate_limit import RateLimitMiddleware
+from core.security_headers import SecurityHeadersMiddleware
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI):
+async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     configure_logging(settings.log_level)
     vertexai.init(project=settings.gcp_project_id, location=settings.vertex_location)
     yield
@@ -27,6 +30,8 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title="saksham-backend", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(RequestIdMiddleware)
+app.add_middleware(RateLimitMiddleware)
+app.add_middleware(SecurityHeadersMiddleware)
 add_exception_handler(app)
 
 app.include_router(chat_router)

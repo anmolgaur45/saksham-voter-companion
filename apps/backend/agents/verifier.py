@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 from core.config import settings
@@ -32,7 +34,7 @@ class VerifierAgent:
             settings.vertex_search_datastore_id,
         )
 
-    async def run(self, message: str) -> dict:
+    async def run(self, message: str) -> dict[str, Any]:
         """Fact-check a claim against ECI documents and return a structured verdict.
 
         Args:
@@ -42,7 +44,7 @@ class VerifierAgent:
             Dict with keys: response (str with VERDICT/REASONING), citations (list),
             agent ("verifier"), verdict (one of TRUE/FALSE/PARTIALLY_TRUE/UNVERIFIABLE).
         """
-        response = self._model.generate_content(
+        response = await self._model.generate_content_async(
             contents=f"Verify this claim: {message}",
             tools=[self._tool],
             generation_config=GenerationConfig(temperature=0),

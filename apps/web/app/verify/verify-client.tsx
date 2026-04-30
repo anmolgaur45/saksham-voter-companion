@@ -80,7 +80,14 @@ export default function VerifyClient() {
         <p className="text-sm text-muted-foreground">{t.description}</p>
       </div>
 
-      <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
+      <div
+        className="rounded-lg px-4 py-3 text-xs"
+        style={{
+          backgroundColor: "var(--warning-soft-bg)",
+          border: "1px solid var(--warning)",
+          color: "var(--warning)",
+        }}
+      >
         <strong>Procedural Facts Only.</strong>{" "}{t.disclaimer.replace("Procedural Facts Only. ", "")}
       </div>
 

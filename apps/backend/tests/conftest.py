@@ -5,9 +5,11 @@ from httpx import ASGITransport, AsyncClient
 
 
 def _classifier_mock():
-    """GenerativeModel mock whose generate_content returns greeting intent JSON."""
+    """GenerativeModel mock returning greeting intent JSON for both sync and async calls."""
+    mock_response = MagicMock(text='{"intent": "greeting"}')
     m = MagicMock()
-    m.generate_content.return_value = MagicMock(text='{"intent": "greeting"}')
+    m.generate_content.return_value = mock_response
+    m.generate_content_async = AsyncMock(return_value=mock_response)
     return m
 
 

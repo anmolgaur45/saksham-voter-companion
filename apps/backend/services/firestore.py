@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from google.cloud import firestore
 
 from core.config import settings
@@ -16,7 +18,7 @@ def get_client() -> firestore.AsyncClient:
     return _client
 
 
-async def search_constituency(query: str) -> dict | None:
+async def search_constituency(query: str) -> dict[str, Any] | None:
     """Search constituencies by partial name or search key match.
 
     Args:
@@ -29,12 +31,12 @@ async def search_constituency(query: str) -> dict | None:
     q = query.lower().strip()
     async for doc in client.collection("constituencies").stream():
         data = doc.to_dict()
-        if any(q in key for key in data.get("search_keys", [])):
+        if data is not None and any(q in key for key in data.get("search_keys", [])):
             return data
     return None
 
 
-async def get_constituency_by_id(constituency_id: str) -> dict | None:
+async def get_constituency_by_id(constituency_id: str) -> dict[str, Any] | None:
     """Fetch a constituency document by its Firestore document ID.
 
     Args:
@@ -48,7 +50,7 @@ async def get_constituency_by_id(constituency_id: str) -> dict | None:
     return doc.to_dict() if doc.exists else None
 
 
-async def get_session(session_id: str) -> dict:
+async def get_session(session_id: str) -> dict[str, Any]:
     """Retrieve a user session document, returning an empty dict if it does not exist.
 
     Args:
@@ -59,10 +61,10 @@ async def get_session(session_id: str) -> dict:
     """
     client = get_client()
     doc = await client.collection("sessions").document(session_id).get()
-    return doc.to_dict() if doc.exists else {}
+    return doc.to_dict() or {}
 
 
-async def update_session(session_id: str, data: dict) -> None:
+async def update_session(session_id: str, data: dict[str, Any]) -> None:
     """Merge-update a session document, creating it if it does not exist.
 
     Args:

@@ -200,6 +200,9 @@ export default function Dashboard({ profile }: { profile: Profile }) {
               <button
                 key={item.id}
                 onClick={() => toggle(item.id)}
+                role="checkbox"
+                aria-checked={item.done}
+                aria-label={item.label}
                 className="flex items-center gap-3 w-full text-left"
               >
                 {item.done ? (
